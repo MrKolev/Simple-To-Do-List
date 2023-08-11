@@ -56,7 +56,9 @@ export const FormTask = ({ onEnterTask }) => {
             <div>
                 <label>DEADLINE :</label>
                 <input
-                    type='dat'
+                    type='date'
+                    min={new Date().toISOString().split('T')[0]}
+                    max={'2099-12-31'}
                     value={deadlineInput}
                     onChange={(e) => setDeadlineInput(e.target.value)}
                 />

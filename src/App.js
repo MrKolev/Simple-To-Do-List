@@ -51,6 +51,17 @@ function App() {
     setLists((prevLists) => [newList, ...prevLists]);
   }
 
+  function deleteList(listId) {
+    const filteredList = lists.filter((list) => listId !== list.id)
+
+
+    console.log(filteredList);
+
+
+
+    setLists(filteredList);
+  }
+
   useEffect(() => {
     localStorage.setItem("data", JSON.stringify(lists));
   }, [lists]);
@@ -68,7 +79,9 @@ function App() {
               status={list.listStatus}
               key={list.id}
               name={list.name}
-              tasks={list.tasks} />)
+              tasks={list.tasks}
+              id={list.id}
+              deleteList={deleteList} />)
           })}
         </div>}
     </div>

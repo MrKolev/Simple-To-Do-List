@@ -1,6 +1,6 @@
 import classes from './Task.module.css';
 
-export const Task = ({ title, description, deadline, taskStatus }) => {
+export const Task = ({id, title, description, deadline, taskStatus }) => {
 
 
     return (
@@ -8,7 +8,7 @@ export const Task = ({ title, description, deadline, taskStatus }) => {
             <p>Title: {title}</p>
             <p>Description: {description}</p>
             <p>Deadline: {deadline}</p>
-            <p>status {title}: {taskStatus}</p>
+            {taskStatus && <p>status: {taskStatus}</p>}
         </li>
     )
 }

@@ -66,6 +66,7 @@ export const NewList = ({ updateList, close }) => {
                 {tasks.map((task) => {
                     return <Task
                         key={task.id}
+                        id={task.id}
                         title={task.title}
                         description={task.description}
                         deadline={task.deadline} />
