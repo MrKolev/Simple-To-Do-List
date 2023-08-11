@@ -1,0 +1,22 @@
+.form {
+    display: block;
+    padding: 5px;
+  }
+  
+  .form input {
+    font:inherit;
+    padding: 3px;
+    border: none;
+    border-bottom: 3px solid #ccc;
+    margin-right: 3px;
+  }
+  
+  .form input:focus {
+    outline: none;
+    border-color: #7a0144;
+  }
+
+  .error{
+    color: red
+  }
+
