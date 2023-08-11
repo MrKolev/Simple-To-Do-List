@@ -1,7 +1,7 @@
 import { Task } from "./Task"
 import classes from "./ToDoLists.module.css"
 
-export const ToDoLists = ({id, name, tasks, status, deleteList }) => {
+export const ToDoLists = ({id, name, tasks, status, deleteList, editList}) => {
 
     return (
         <div className={classes.div} >
@@ -17,7 +17,7 @@ export const ToDoLists = ({id, name, tasks, status, deleteList }) => {
                         taskStatus={task.taskStatus} />
                 })}
             </ul>
-            <button >edit</button>
+            <button onClick={()=>editList(id)} >edit</button>
             <button onClick={()=>deleteList(id)}>delete</button>
         </div>
     )

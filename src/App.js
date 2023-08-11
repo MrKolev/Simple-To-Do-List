@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import './App.css';
 import { ToDoLists } from "./components/ToDoLists"
-import { NewList } from './components/NewList';
+import { CardList } from './components/CardList';
 
 // const toDoLists = [{
 //   id: 'toDo1',
@@ -21,44 +21,28 @@ import { NewList } from './components/NewList';
 //     id: "id2",
 //     taskStatus: "COMPLETED",
 //   }]
-// }, {
-//   id: 'toDo2',
-//   name: 'toDo2',
-//   listStatus: "COMPLETED",
-//   tasks: [{
-//     title: "task3",
-//     description: "To do task3",
-//     deadline: "20.01.2024",
-//     id: "id123",
-//     taskStatus: "COMPLETED",
-//   }]
-// }]
 
 const data = JSON.parse(localStorage.getItem("data"));
 
 function App() {
+
   const [lists, setLists] = useState([]);
-  const [showNewList, setShowNewList] = useState(false);
+  const [listData, setListData] = useState([]);
+  const [showCardList, setShowCardList] = useState(false);
+  const [showEditCardList, setShowEditCardList] = useState(false);
+
   useEffect(() => {
     if (data) {
       setLists(data);
     }
-  }, [])
+  }, []);
 
-
-
-  function updateList(newList) {
+  function addList(newList) {
     setLists((prevLists) => [newList, ...prevLists]);
   }
 
   function deleteList(listId) {
-    const filteredList = lists.filter((list) => listId !== list.id)
-
-
-    console.log(filteredList);
-
-
-
+    const filteredList = lists.filter((list) => listId !== list.id);
     setLists(filteredList);
   }
 
@@ -66,24 +50,46 @@ function App() {
     localStorage.setItem("data", JSON.stringify(lists));
   }, [lists]);
 
+
+  const openCardList = () => {
+    setShowCardList(true);
+  };
+
+  const closeCardList = () => {
+    setShowCardList(false);
+  };
+
+  const openEditCardList = (listId) => {
+    const listById = lists.filter((list) => listId === list.id);
+    setListData(listById);
+    setShowEditCardList(true);
+  }
+
   return (
     <div className="App">
-      {!showNewList && <button onClick={() => setShowNewList(true)}>create</button>}
-      {showNewList && <NewList
-        updateList={updateList}
-        close={() => setShowNewList(false)} />}
-      {!showNewList &&
-        <div>
-          {lists.map((list) => {
-            return (<ToDoLists
-              status={list.listStatus}
-              key={list.id}
-              name={list.name}
-              tasks={list.tasks}
-              id={list.id}
-              deleteList={deleteList} />)
-          })}
-        </div>}
+      <button onClick={openCardList}>create</button>
+      {showCardList && <CardList
+        addList={addList}
+        close={closeCardList}
+        title={"New List"} />}
+
+      {showEditCardList && <CardList
+        close={() => setShowEditCardList(false)}
+        listData={listData}
+        title={"Edit List"} />}
+
+      <div>
+        {lists.map((list) => {
+          return (<ToDoLists
+            status={list.listStatus}
+            key={list.id}
+            name={list.name}
+            tasks={list.tasks}
+            id={list.id}
+            deleteList={deleteList}
+            editList={openEditCardList} />)
+        })}
+      </div>
     </div>
   );
 }
