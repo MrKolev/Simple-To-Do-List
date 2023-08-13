@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import classes from './FormTask.module.css';
 
-export const FormTask = ({ onEnterTask }) => {
-    const [titleInput, setTitleInput] = useState('');
-    const [descriptionInput, setDescriptionInput] = useState('');
-    const [deadlineInput, setDeadlineInput] = useState('');
+export const EditFormTask = ({task, setEditTask }) => {
+
+    console.log(task);
+
+    const [titleInput, setTitleInput] = useState(task.title);
+    const [descriptionInput, setDescriptionInput] = useState(task.description);
+    const [deadlineInput, setDeadlineInput] = useState(task.deadline);
     const [error, setError] = useState(false);
 
     const submitHandler = (event) => {
@@ -15,23 +18,21 @@ export const FormTask = ({ onEnterTask }) => {
             descriptionInput.trim().length > 0 &&
             deadlineInput.trim().length > 0
         ) {
-            onEnterTask({
+
+            const editTask = {
                 title: titleInput,
                 description: descriptionInput,
-                deadline: deadlineInput
-            });
+                deadline: deadlineInput,
+                id: task.id,
+                taskStatus: task.taskStatus,
+            }
 
-            resetFields();
+            setEditTask(editTask);
             setError(false);
+
         } else {
             setError(true);
         }
-    };
-
-    const resetFields = () => {
-        setTitleInput('');
-        setDescriptionInput('');
-        setDeadlineInput('');
     };
 
     return (
@@ -63,7 +64,7 @@ export const FormTask = ({ onEnterTask }) => {
                     onChange={(e) => setDeadlineInput(e.target.value)}
                 />
             </div>
-            <button type='submit'>Add Task</button>
+            <button type='submit'>Edit Task</button>
         </form>
     );
 };

@@ -1,4 +1,3 @@
-import { Task } from "./Task"
 import classes from "./ToDoLists.module.css"
 
 export const ToDoLists = ({id, name, tasks, status, deleteList, editList}) => {
@@ -9,12 +8,14 @@ export const ToDoLists = ({id, name, tasks, status, deleteList, editList}) => {
             <p>List Status: {status}</p>
             <ul>
                 {tasks.map((task) => {
-                    return <Task
-                        key={task.id}
-                        title={task.title}
-                        description={task.description}
-                        deadline={task.deadline}
-                        taskStatus={task.taskStatus} />
+                    return (
+                        <li className={classes.task} >
+                        <p>Title: {task.title}</p>
+                        <p>Description: {task.description}</p>
+                        <p>Deadline: {task.deadline}</p>
+                        {task.taskStatus && <p>status: {task.taskStatus}</p>}
+                    </li>
+                    )
                 })}
             </ul>
             <button onClick={()=>editList(id)} >edit</button>
