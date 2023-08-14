@@ -1,9 +1,9 @@
-import classes from "./ToDoLists.module.css"
+import "./styles/ToDoLists.css"
 
-export const ToDoLists = ({ id, name, tasks, status, deleteList, editList }) => {
+const ToDoLists = ({ id, name, tasks, status, deleteList, editList }) => {
 
     return (
-        <div className={classes.div} >
+        <div className="list-wrapper" >
             <p>List Name: {name}</p>
             <p>List Status: {status}</p>
             <ul>
@@ -11,7 +11,7 @@ export const ToDoLists = ({ id, name, tasks, status, deleteList, editList }) => 
                     return (
                         <li
                             key={task.id}
-                            className={classes.task} >
+                            className="task" >
                             <p>Title: {task.title}</p>
                             <p>Description: {task.description}</p>
                             <p>Deadline: {task.deadline}</p>
@@ -25,4 +25,6 @@ export const ToDoLists = ({ id, name, tasks, status, deleteList, editList }) => 
             <button onClick={() => deleteList(id)}>delete</button>
         </div>
     )
-}
+};
+
+export default ToDoLists

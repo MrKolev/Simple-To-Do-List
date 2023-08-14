@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import "./styles/FormTask.css"
 
-export const FormTask = ({ setNewTask, editTask, setEditTask }) => {
+const FormTask = ({ setNewTask, editTask, setEditTask }) => {
 
     const [formState, setFormState] = useState(
         editTask || {
@@ -54,8 +55,10 @@ export const FormTask = ({ setNewTask, editTask, setEditTask }) => {
     };
 
     return (
-        <form onSubmit={submitHandler}>
-            <div>
+        <form
+            className="form-task"
+            onSubmit={submitHandler}>
+            <div className="form-task-wrap-input">
                 <label>TITLE:</label>
                 <input
                     type='text'
@@ -65,7 +68,7 @@ export const FormTask = ({ setNewTask, editTask, setEditTask }) => {
                     onChange={handleChange}
                 />
             </div>
-            <div>
+            <div className="form-task-wrap-input">
                 <label>DESCRIPTION :</label>
                 <textarea
                     name="description"
@@ -74,7 +77,7 @@ export const FormTask = ({ setNewTask, editTask, setEditTask }) => {
                     onChange={handleChange}
                 />
             </div>
-            <div>
+            <div className="form-task-wrap-input">
                 <label>DEADLINE :</label>
                 <input
                     type='date'
@@ -89,3 +92,5 @@ export const FormTask = ({ setNewTask, editTask, setEditTask }) => {
         </form>
     );
 };
+
+export default FormTask

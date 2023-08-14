@@ -1,0 +1,168 @@
+.modal {
+  display: block;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+  background-color: rgb(255, 252, 252);
+  border: 1px solid #888;
+  width: 41%;
+  max-height: 80%;
+  position: absolute;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  overflow-y: auto;
+  left: 30%;
+  top: 10%;
+
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.modal-content::-webkit-scrollbar {
+  display: none;
+}
+
+.close {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.form-wrapper {
+  display: flex;
+  flex-direction: column;
+
+  border-radius: 12px;
+  border: 1px solid #ccc;
+
+  background-color: bisque;
+}
+
+.form-wrapper h3 {
+  margin-top: 15px;
+  margin-bottom: 5px;
+}
+
+.input-name-wrapper {
+  display: flex;
+  flex-direction: row;
+  width: 84%;
+  align-items: flex-end;
+  margin: 5px auto; 
+  border: 1px solid #ccc;
+  border: none;
+
+}
+
+.input-name-wrapper input {
+  border: none;  
+  border-bottom: 3px solid #deddcc;
+  border-bottom-right-radius: 18px;
+}
+.input-name-wrapper label {
+  border: none;  
+  border-bottom: 3px solid #deddcc;
+  border-bottom-left-radius: 18px;
+}
+
+.input-name-wrapper input:focus {
+  outline: none;
+  border-bottom-color: #08adce;
+  
+}
+
+
+
+
+
+.form {
+  width: 86%;
+  margin: 10px auto;
+  padding: 12px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  border-radius: 12px;
+}
+
+
+.list {
+  border-radius: 12px;
+  border: 1px solid #ccc;
+
+  padding: 20px;
+  background-color: bisque;
+
+}
+
+.list h2 {
+  margin: 0 auto;
+}
+
+.form input {
+  width: 80%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  background-color: red;
+  outline: none;
+  border-radius: 5px;
+
+}
+
+.form input:focus {
+  outline: none;
+  background-color: #cecaee;
+}
+
+.error {
+  color: red
+}
+
+
+button {
+  background-color: #08adce;
+  color: #fff;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+  margin: 20px auto;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+}
+
+button:hover {
+  outline: none;
+  background-color: #0bd0f7;
+}
+
+
+
+
+.task {
+  background-color: rgb(174, 174, 194);
+  border-bottom: 5px solid #ece994;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  width: 80%;
+  display: inline-block;
+  margin: 5px;
+}
+
+
+.delete-btn {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  color: crimson;
+  font-weight: bold;
+  cursor: pointer;
+}

@@ -1,7 +1,6 @@
 import classes from "./App.module.css"
 import { useEffect, useState } from 'react';
 import { ToDoLists } from "./components/ToDoLists"
-
 import { CardList } from './components/CardList';
 
 
@@ -39,7 +38,6 @@ function App() {
   }
 
   function updateLists(newList) {
-    debugger
     setLists(lists.map((list) => newList.id === list.id ? newList : list));
   }
 
@@ -84,6 +82,7 @@ function App() {
       />}
 
       <div>
+        {lists.length === 0 && <p>To Do List ...</p>}
         {lists.map((list) => {
           return (<ToDoLists
             status={list.listStatus}
