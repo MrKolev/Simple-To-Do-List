@@ -1,38 +1,42 @@
 import React, { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import "./styles/FormTask.css"
+import classNames from 'classnames';
 
-const FormTask = ({ setNewTask, editTask, setEditTask }) => {
+const FormTask = ({ setNewTask, editTask, setEditTask, action }) => {
 
     const [formState, setFormState] = useState(
         editTask || {
+            id: "",
             title: "",
             description: "",
             deadline: "",
-            status: false,
+            taskStatus: false,
         }
     );
+
+    const { id, title, description, deadline, taskStatus } = formState;
 
     const [error, setError] = useState(false);
 
     const submitHandler = (event) => {
         event.preventDefault();
 
-        if (
-            !formState.title.trim().length > 0 &&
-            !formState.description.trim().length > 0 &&
-            !formState.deadline.trim().length > 0
-        ) { return setError(true); }
-
-        const newTask = {
-            title: formState.title,
-            description: formState.description,
-            deadline: formState.deadline,
-            id: editTask ? editTask.id : uuidv4(),
-            taskStatus: editTask ? editTask.taskStatus : false,
+        if (title === "" ||
+            description === "" ||
+            deadline === "") {
+            return setError(true);
         }
 
-        if (editTask) {
+        const newTask = {
+            title: title,
+            description: description,
+            deadline: deadline,
+            id: id || uuidv4(),
+            taskStatus: taskStatus
+        }
+
+        if (action === "edit") {
             setEditTask(newTask)
         } else {
             setNewTask(newTask);
@@ -59,38 +63,42 @@ const FormTask = ({ setNewTask, editTask, setEditTask }) => {
             className="form-task"
             onSubmit={submitHandler}>
             <div className="form-task-wrap-input">
-                <label>TITLE:</label>
+                <label>TITLE :</label>
                 <input
+                    className={classNames(error && "input-error")}
                     type='text'
                     name="title"
-                    value={formState.title}
-                    placeholder={error ? 'Please enter the field!' : ""}
+                    value={title}
+                    placeholder={error ? 'Please enter the field!': ""}
                     onChange={handleChange}
                 />
             </div>
             <div className="form-task-wrap-input">
                 <label>DESCRIPTION :</label>
                 <textarea
+                    className={classNames(error && "input-error")}
                     name="description"
-                    value={formState.description}
-                    placeholder={error ? 'Please enter the field!' : ""}
+                    value={description}
+                    placeholder={error ? 'Please enter the field!': ""}
                     onChange={handleChange}
                 />
             </div>
             <div className="form-task-wrap-input">
                 <label>DEADLINE :</label>
                 <input
+                    className={classNames(error && "input-error")}
                     type='date'
                     name='deadline'
                     min={new Date().toISOString().split('T')[0]}
                     max={'2099-12-31'}
-                    value={formState.deadline}
+                    value={deadline}
                     onChange={handleChange}
                 />
             </div>
-            <button type='submit'>{editTask ? "Save Task" : "Add Task"} </button>
+            <button type='submit'>{action === "edit" ? "Save Task" : "Add Task"} </button>
         </form>
     );
 };
 
+FormTask.defaultProps = { action: "create" };
 export default FormTask

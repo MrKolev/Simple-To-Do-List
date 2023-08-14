@@ -5,12 +5,12 @@ import { FormTask } from '../FormTask';
 import { BsFillTrashFill, BsFillPencilFill } from "react-icons/bs";
 
 
-const CardList = ({ listEdit, updateLists, close, addToLists }) => {
+const CardList = ({ listEdit, updateLists, close, addToLists, action }) => {
 
     const [list, setList] = useState(
         listEdit || {
-            id: null,
-            name: '',
+            id: "",
+            name: "",
             listStatus: false,
             tasks: []
         }
@@ -19,61 +19,60 @@ const CardList = ({ listEdit, updateLists, close, addToLists }) => {
     const [error, setError] = useState(false);
     const [edit, setEdit] = useState(false);
 
+    const { id, name, listStatus, tasks } = list
 
-    function onSubmit() {
 
-        if (list.name.length <= 0 || list.tasks.length === 0) {
+    const onSubmit = () => {
+
+        if (name.length <= 0 || tasks.length === 0) {
             return setError(true)
-        }
+        };
 
         const newList = {
-            name: list.name,
-            id: listEdit ? list.id : uuidv4(),
-            listStatus: listEdit ? true : false,
-            tasks: list.tasks
-        }
+            name: name,
+            id: id || uuidv4(),
+            listStatus: listStatus,
+            tasks: tasks
+        };
 
-        if (listEdit) {
-            updateLists(newList);
-        } else {
-            addToLists(newList);
-        }
+        if (action === "edit") updateLists(newList);
+        if (action === "create") addToLists(newList);
 
         close();
     }
 
-    function deleteTask(taskId) {
+    const deleteTask = (taskId) => {
         setList((prevList) => {
-            const newTasks = prevList.tasks.filter((task) => taskId !== task.id)
-            return { ...prevList, tasks: newTasks }
+            const newTasks = prevList.tasks.filter((task) => taskId !== task.id);
+            return { ...prevList, tasks: newTasks };
         });
     }
 
-    function editTask(taskId) {
-        setTaskById(list.tasks.filter((task) => taskId === task.id))
+    const editTask = (taskId) => {
+        setTaskById(tasks.filter((task) => taskId === task.id));
         setEdit(true);
     }
 
-    function setNewTask(newTask) {
+    const setNewTask = (newTask) => {
         setList((prevList) => {
-            const newTasks = [newTask, ...prevList.tasks]
-            return { ...prevList, tasks: newTasks }
+            const newTasks = [newTask, ...prevList.tasks];
+            return { ...prevList, tasks: newTasks };
         });
-        setError(false)
+        setError(false);
     }
 
-    function setEditTask(editTask) {
+    const setEditTask = (editTask) => {
         setList((prevList) => {
-            const newTasks = prevList.tasks.map((task) => editTask.id === task.id ? editTask : task)
-            return { ...prevList, tasks: newTasks }
+            const newTasks = prevList.tasks.map((task) => editTask.id === task.id ? editTask : task);
+            return { ...prevList, tasks: newTasks };
         });
         setEdit(false);
     }
 
-    function handleChange(e) {
+    const handleChange = (e) => {
         e.preventDefault();
         setList((prevList) => {
-            return { ...prevList, name: e.target.value }
+            return { ...prevList, name: e.target.value };
         });
     };
 
@@ -90,7 +89,7 @@ const CardList = ({ listEdit, updateLists, close, addToLists }) => {
                     <label>Name:</label>
                     <input
                         type='text'
-                        value={list.name}
+                        value={name}
                         onChange={handleChange}
                         placeholder={error ? "please fill in the field" : ""}
                     />
@@ -100,7 +99,6 @@ const CardList = ({ listEdit, updateLists, close, addToLists }) => {
                     <h3>Create new task</h3>
                     <FormTask
                         setNewTask={setNewTask}
-                        defaultValue={null}
                     />
                 </div>}
 
@@ -109,10 +107,11 @@ const CardList = ({ listEdit, updateLists, close, addToLists }) => {
                     <FormTask
                         setEditTask={setEditTask}
                         editTask={taskById[0]}
+                        action={"edit"}
                     />
                 </div>}
                 <ul>
-                    {list.tasks.map((task) => {
+                    {tasks.map((task) => {
                         return (
                             <li className="task-list" key={task.id} >
                                 {!edit && <BsFillTrashFill
@@ -137,5 +136,7 @@ const CardList = ({ listEdit, updateLists, close, addToLists }) => {
         </div>
     );
 }
+
+CardList.defaultProps = { action: "create" };
 
 export default CardList;

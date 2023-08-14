@@ -22,14 +22,10 @@
   width: 170px;
   height: 70px;
   overflow: hidden;
-
-  border-bottom: 3px solid #deddcc;
-  border-radius: 5px;
-  background-color: bisque;
 }
 
 
-.list {
+/* .list {
   border-radius: 12px;
   border: 1px solid #ccc;
   width: 100%;
@@ -124,4 +120,4 @@ button:hover {
   width: 80%;
   display: inline-block;
   margin: 5px;
-}
+} */

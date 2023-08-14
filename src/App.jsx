@@ -23,39 +23,36 @@ import { CardList } from './components/CardList';
 //     taskStatus: "COMPLETED",
 //   }]
 
-const data = JSON.parse(localStorage.getItem("data"));
 
-function App() {
 
-  const [lists, setLists] = useState(data);
+const App = () => {
+
+  const [lists, setLists] = useState(JSON.parse(localStorage.getItem("data")));
   const [listById, setListById] = useState([]);
   const [showCardList, setShowCardList] = useState(false);
   const [showEditCardList, setShowEditCardList] = useState(false);
-
-
-  function addToLists(newList) {
-    setLists((prevLists) => [newList, ...prevLists]);
-  }
-
-  function updateLists(newList) {
-    setLists(lists.map((list) => newList.id === list.id ? newList : list));
-  }
-
-  function deleteList(listId) {
-    const filteredList = lists.filter((list) => listId !== list.id);
-    setLists(filteredList);
-  }
 
   useEffect(() => {
     localStorage.setItem("data", JSON.stringify(lists));
   }, [lists]);
 
+  const addToLists = (newList) => {
+    setLists((prevLists) => [newList, ...prevLists]);
+  }
+
+  const updateLists = (newList) => {
+    setLists(lists.map((list) => newList.id === list.id ? newList : list));
+  }
+
+  const deleteList = (listId) => {
+    const filteredList = lists.filter((list) => listId !== list.id);
+    setLists(filteredList);
+  }
+
 
   const openCardList = () => {
     setShowCardList(true);
   };
-
-
 
   const openEditCardList = (listId) => {
     const listById = lists.filter((list) => listId === list.id);
@@ -75,6 +72,7 @@ function App() {
       />}
 
       {showEditCardList && <CardList
+        action={"edit"}
         listEdit={listById[0]}
         updateLists={updateLists}
         close={() => setShowEditCardList(false)}
@@ -82,7 +80,7 @@ function App() {
       />}
 
       <div>
-        {lists.length === 0 && <p>To Do List ...</p>}
+        {lists.length === 0 && <p>Еmpty list...</p>}
         {lists.map((list) => {
           return (<ToDoLists
             status={list.listStatus}
