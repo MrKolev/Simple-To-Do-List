@@ -1,9 +1,9 @@
+import classes from "./App.module.css"
 import { useEffect, useState } from 'react';
-import './App.css';
 import { ToDoLists } from "./components/ToDoLists"
 
-import { EditCardList } from './components/EditCardList';
-import { NewCardList } from './components/NewCardList';
+import { CardList } from './components/CardList';
+
 
 // const toDoLists = [{
 //   id: 'toDo1',
@@ -39,7 +39,8 @@ function App() {
   }
 
   function updateLists(newList) {
-
+    debugger
+    setLists(lists.map((list) => newList.id === list.id ? newList : list));
   }
 
   function deleteList(listId) {
@@ -65,20 +66,21 @@ function App() {
   }
 
   return (
-    <div className="App">
-      <button onClick={openCardList}>create</button>
+    <div className={classes.app}>
+      <button className={classes.button} onClick={openCardList}>create</button>
 
-      {showCardList && <NewCardList
-        addToLists={addToLists}
+      {showCardList && <CardList
+        listEdit={null}
+        updateLists={updateLists}
         close={() => setShowCardList(false)}
+        addToLists={addToLists}
       />}
 
-
-
-      {showEditCardList && <EditCardList
-        list={listById[0]}
+      {showEditCardList && <CardList
+        listEdit={listById[0]}
         updateLists={updateLists}
         close={() => setShowEditCardList(false)}
+        addToLists={addToLists}
       />}
 
       <div>
