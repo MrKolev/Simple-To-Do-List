@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import "./styles/CardList.css"
 import { FormTask } from '../FormTask';
-import { TaskCard } from '../TaskCard';
+import { TaskCard } from './TaskCard';
 
 
 const CardList = ({ listEdit, updateLists, close, addToLists, action }) => {
@@ -17,7 +17,7 @@ const CardList = ({ listEdit, updateLists, close, addToLists, action }) => {
     );
     const [taskById, setTaskById] = useState();
     const [error, setError] = useState(false);
-    const [isEdit, setIsEdit] = useState(true);
+    const [isEdit, setIsEdit] = useState(false);
 
     const { id, name, listStatus, tasks } = list
 
@@ -50,7 +50,7 @@ const CardList = ({ listEdit, updateLists, close, addToLists, action }) => {
 
     const getTaskById = (taskId) => {
         setTaskById(tasks.filter((task) => taskId === task.id));
-        setIsEdit(false);
+        setIsEdit(true);
     }
 
     const setNewTask = (newTask) => {
@@ -62,11 +62,12 @@ const CardList = ({ listEdit, updateLists, close, addToLists, action }) => {
     }
 
     const setEditTask = (editTask) => {
+        debugger
         setList((prevList) => {
             const newTasks = prevList.tasks.map((task) => editTask.id === task.id ? editTask : task);
             return { ...prevList, tasks: newTasks };
         });
-        setIsEdit(true);
+        setIsEdit(false);
     }
 
     const handleChange = (e) => {
@@ -103,23 +104,23 @@ const CardList = ({ listEdit, updateLists, close, addToLists, action }) => {
                     />
                 </div>}
 
-                {isEdit && <div className="form-edit">
+                {isEdit && <div className="form-wrapper-edit">
                     <h3>Edit task</h3>
                     <FormTask
                         setEditTask={setEditTask}
-                        editTask={taskById}
+                        editTask={taskById[0]}
                         action={"edit"}
                     />
                 </div>}
                 <ul>
                     {tasks.map((task) => {
                         return (
-                            <TaskCard 
-                            key={task.id}
-                            task={task}
-                            isEdit={isEdit}
-                            onClickEditBtn={getTaskById}
-                            deleteTaskById={deleteTaskById}
+                            <TaskCard
+                                key={task.id}
+                                task={task}
+                                isEdit={isEdit}
+                                onClickEditBtn={getTaskById}
+                                deleteTaskById={deleteTaskById}
                             />
                         )
                     })}

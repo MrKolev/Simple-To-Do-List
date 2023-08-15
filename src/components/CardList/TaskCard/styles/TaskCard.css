@@ -1,0 +1,93 @@
+.task-card {
+  list-style: none;
+  background-color: #edc3f933;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.delete-btn,
+.task-status,
+.edit-btn {
+  cursor: pointer;
+  font-size: 18px;
+  margin-right: 10px;  
+}
+
+.delete-btn:hover,
+.edit-btn:hover {
+  color: red;
+}
+
+.task-details {
+  flex: 1;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+th, td {
+  border: 1px solid #ccc;
+  padding: 5px;
+}
+
+th {
+  background-color: #f0f0f0;
+  font-weight: bold;
+}
+
+tr:nth-of-type(even) {
+  background-color: #eee;
+}
+
+thead th,
+tbody td {
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: left;
+  overflow: hidden; 
+  max-width: 200px; 
+  text-overflow: ellipsis; 
+}
+
+tbody td:hover {
+  white-space: normal; 
+  overflow: visible; 
+  text-overflow: initial; 
+}
+
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  position: absolute;
+  background-color: #08adce;
+  color: #fff;
+  padding: 5px;
+  border-radius: 3px;
+  white-space: nowrap;
+  z-index: 1;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  
+}
+
+.tooltip:hover label:hover {
+  visibility: visible;
+  background-color: #0bd0f7;
+  border-radius: 3px;  
+}

@@ -41,12 +41,23 @@
 .form-wrapper {
   display: flex;
   flex-direction: column;
+  width: 80%;
+  border-radius: 12px;
+  border: 1px solid #ccc;
+  margin: 0 auto;
+  background-color: bisque;
+}
+
+.form-wrapper-edit {
+  display: flex;
+  flex-direction: column;
 
   border-radius: 12px;
   border: 1px solid #ccc;
 
-  background-color: bisque;
+  background-color: rgba(255, 0, 0, 0.13);
 }
+
 
 .form-wrapper h3 {
   margin-top: 15px;
@@ -58,19 +69,20 @@
   flex-direction: row;
   width: 84%;
   align-items: flex-end;
-  margin: 5px auto; 
+  margin: 5px auto;
   border: 1px solid #ccc;
   border: none;
 
 }
 
 .input-name-wrapper input {
-  border: none;  
+  border: none;
   border-bottom: 3px solid #deddcc;
   border-bottom-right-radius: 18px;
 }
+
 .input-name-wrapper label {
-  border: none;  
+  border: none;
   border-bottom: 3px solid #deddcc;
   border-bottom-left-radius: 18px;
 }
@@ -78,7 +90,7 @@
 .input-name-wrapper input:focus {
   outline: none;
   border-bottom-color: #08adce;
-  
+
 }
 
 

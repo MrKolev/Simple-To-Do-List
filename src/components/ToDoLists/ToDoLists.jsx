@@ -1,7 +1,7 @@
-import { TaskCard } from "../TaskCard";
+import { TaskCard } from "../CardList/TaskCard";
 import "./styles/ToDoLists.css"
 
-const ToDoLists = ({ id, name, tasks, status, deleteList, editList }) => {
+const ToDoLists = ({ id, name, tasks, status, deleteList, editList,updateTaskStatus }) => {
 
     return (
         <div className="list-wrapper" >
@@ -12,7 +12,9 @@ const ToDoLists = ({ id, name, tasks, status, deleteList, editList }) => {
                     return (
                         <TaskCard
                             key={task.id}
-                            task={task}                           
+                            task={task}
+                            isEdit={true}
+                            updateTaskStatus={updateTaskStatus}                           
                         />
                     )
                 })}

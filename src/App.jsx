@@ -2,7 +2,7 @@ import classes from "./App.module.css"
 import { useEffect, useState } from 'react';
 import { ToDoLists } from "./components/ToDoLists"
 import { CardList } from './components/CardList';
-import moment from "moment";
+import { checkTaskExpired, updateTaskStatusById } from "./utils/updateTasks";
 
 
 // const toDoLists = [{
@@ -34,24 +34,14 @@ const App = () => {
   const [showEditCardList, setShowEditCardList] = useState(false);
 
   useEffect(() => {
+    const newList = checkTaskExpired(lists)
+    if(newList){
+      console.log("set New list from checkTaskExpired(lists)");
+      setLists(newList)
+    }    
     localStorage.setItem("data", JSON.stringify(lists));
-    console.log("local set");
   }, [lists]);
-
-  useEffect(() => {
-    lists.forEach((list) => {
-      list.tasks.forEach((task) => {
-        if (task.taskStatus !== "DISABLED") {
-          const today = moment();
-          const expirationDate = moment(task.deadline);
-          if (expirationDate.isBefore(today)) {
-            task.taskStatus = "DISABLED";
-          }
-        }
-      })
-    })
-    setLists(lists);
-  }, [showCardList]);
+  
 
   const addToLists = (newList) => {
     setLists((prevLists) => [newList, ...prevLists]);
@@ -59,6 +49,11 @@ const App = () => {
 
   const updateLists = (newList) => {
     setLists(lists.map((list) => newList.id === list.id ? newList : list));
+  }
+  const updateTaskStatus = (id, taskStatus) => {
+    const newList = updateTaskStatusById(lists, id, taskStatus);
+    setLists(newList)
+    console.log(newList);
   }
 
   const deleteList = (listId) => {
@@ -95,7 +90,6 @@ const App = () => {
         close={() => setShowEditCardList(false)}
         addToLists={addToLists}
       />}
-
       <div>
         {lists.length === 0 && <p>Еmpty list...</p>}
         {lists.map((list) => {
@@ -106,7 +100,8 @@ const App = () => {
             tasks={list.tasks}
             id={list.id}
             deleteList={deleteList}
-            editList={openEditCardList} />)
+            editList={openEditCardList}
+            updateTaskStatus={updateTaskStatus} />)
         })}
       </div>
     </div>
