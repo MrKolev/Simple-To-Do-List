@@ -2,6 +2,7 @@ import classes from "./App.module.css"
 import { useEffect, useState } from 'react';
 import { ToDoLists } from "./components/ToDoLists"
 import { CardList } from './components/CardList';
+import moment from "moment";
 
 
 // const toDoLists = [{
@@ -28,13 +29,29 @@ import { CardList } from './components/CardList';
 const App = () => {
 
   const [lists, setLists] = useState(JSON.parse(localStorage.getItem("data")));
-  const [listById, setListById] = useState([]);
+  const [listById, setListById] = useState({});
   const [showCardList, setShowCardList] = useState(false);
   const [showEditCardList, setShowEditCardList] = useState(false);
 
   useEffect(() => {
     localStorage.setItem("data", JSON.stringify(lists));
+    console.log("local set");
   }, [lists]);
+
+  useEffect(() => {
+    lists.forEach((list) => {
+      list.tasks.forEach((task) => {
+        if (task.taskStatus !== "DISABLED") {
+          const today = moment();
+          const expirationDate = moment(task.deadline);
+          if (expirationDate.isBefore(today)) {
+            task.taskStatus = "DISABLED";
+          }
+        }
+      })
+    })
+    setLists(lists);
+  }, [showCardList]);
 
   const addToLists = (newList) => {
     setLists((prevLists) => [newList, ...prevLists]);
@@ -56,7 +73,7 @@ const App = () => {
 
   const openEditCardList = (listId) => {
     const listById = lists.filter((list) => listId === list.id);
-    setListById(listById);
+    setListById(listById[0]);
     setShowEditCardList(true);
   }
 
@@ -73,7 +90,7 @@ const App = () => {
 
       {showEditCardList && <CardList
         action={"edit"}
-        listEdit={listById[0]}
+        listEdit={listById}
         updateLists={updateLists}
         close={() => setShowEditCardList(false)}
         addToLists={addToLists}

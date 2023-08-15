@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import "./styles/CardList.css"
 import { FormTask } from '../FormTask';
-import { BsFillTrashFill, BsFillPencilFill } from "react-icons/bs";
+import { TaskCard } from '../TaskCard';
 
 
 const CardList = ({ listEdit, updateLists, close, addToLists, action }) => {
@@ -17,7 +17,7 @@ const CardList = ({ listEdit, updateLists, close, addToLists, action }) => {
     );
     const [taskById, setTaskById] = useState();
     const [error, setError] = useState(false);
-    const [edit, setEdit] = useState(false);
+    const [isEdit, setIsEdit] = useState(true);
 
     const { id, name, listStatus, tasks } = list
 
@@ -41,16 +41,16 @@ const CardList = ({ listEdit, updateLists, close, addToLists, action }) => {
         close();
     }
 
-    const deleteTask = (taskId) => {
+    const deleteTaskById = (taskId) => {
         setList((prevList) => {
             const newTasks = prevList.tasks.filter((task) => taskId !== task.id);
             return { ...prevList, tasks: newTasks };
         });
     }
 
-    const editTask = (taskId) => {
+    const getTaskById = (taskId) => {
         setTaskById(tasks.filter((task) => taskId === task.id));
-        setEdit(true);
+        setIsEdit(false);
     }
 
     const setNewTask = (newTask) => {
@@ -66,7 +66,7 @@ const CardList = ({ listEdit, updateLists, close, addToLists, action }) => {
             const newTasks = prevList.tasks.map((task) => editTask.id === task.id ? editTask : task);
             return { ...prevList, tasks: newTasks };
         });
-        setEdit(false);
+        setIsEdit(true);
     }
 
     const handleChange = (e) => {
@@ -74,6 +74,7 @@ const CardList = ({ listEdit, updateLists, close, addToLists, action }) => {
         setList((prevList) => {
             return { ...prevList, name: e.target.value };
         });
+        setError(false);
     };
 
     return (
@@ -95,38 +96,31 @@ const CardList = ({ listEdit, updateLists, close, addToLists, action }) => {
                     />
                 </div>
 
-                {!edit && <div className="form-wrapper">
+                {!isEdit && <div className="form-wrapper">
                     <h3>Create new task</h3>
                     <FormTask
                         setNewTask={setNewTask}
                     />
                 </div>}
 
-                {edit && <div className="form-edit">
+                {isEdit && <div className="form-edit">
                     <h3>Edit task</h3>
                     <FormTask
                         setEditTask={setEditTask}
-                        editTask={taskById[0]}
+                        editTask={taskById}
                         action={"edit"}
                     />
                 </div>}
                 <ul>
                     {tasks.map((task) => {
                         return (
-                            <li className="task-list" key={task.id} >
-                                {!edit && <BsFillTrashFill
-                                    onClick={() => deleteTask(task.id)}
-                                    className="delete-btn"
-                                >Delete</BsFillTrashFill>}
-                                <p>Title: {task.title}</p>
-                                <p>Description: {task.description}</p>
-                                <p>Deadline: {task.deadline}</p>
-                                {task.taskStatus && <input type="radio" name="taskStatus" />}
-                                {!edit && <BsFillPencilFill
-                                    className="edit-btn"
-                                    onClick={() => editTask(task.id)}
-                                >Edit</BsFillPencilFill>}
-                            </li>
+                            <TaskCard 
+                            key={task.id}
+                            task={task}
+                            isEdit={isEdit}
+                            onClickEditBtn={getTaskById}
+                            deleteTaskById={deleteTaskById}
+                            />
                         )
                     })}
                 </ul>

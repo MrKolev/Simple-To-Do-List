@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import "./styles/FormTask.css"
 import classNames from 'classnames';
+import moment from 'moment/moment';
+
 
 const FormTask = ({ setNewTask, editTask, setEditTask, action }) => {
 
@@ -11,7 +13,7 @@ const FormTask = ({ setNewTask, editTask, setEditTask, action }) => {
             title: "",
             description: "",
             deadline: "",
-            taskStatus: false,
+            taskStatus: "WAITING",
         }
     );
 
@@ -33,7 +35,7 @@ const FormTask = ({ setNewTask, editTask, setEditTask, action }) => {
             description: description,
             deadline: deadline,
             id: id || uuidv4(),
-            taskStatus: taskStatus
+            taskStatus: taskStatus || ""
         }
 
         if (action === "edit") {
@@ -89,7 +91,7 @@ const FormTask = ({ setNewTask, editTask, setEditTask, action }) => {
                     className={classNames(error && "input-error")}
                     type='date'
                     name='deadline'
-                    min={new Date().toISOString().split('T')[0]}
+                    min={moment().format("YYYY-MM-DD")}
                     max={'2099-12-31'}
                     value={deadline}
                     onChange={handleChange}

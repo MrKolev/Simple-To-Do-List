@@ -1,3 +1,4 @@
+import { TaskCard } from "../TaskCard";
 import "./styles/ToDoLists.css"
 
 const ToDoLists = ({ id, name, tasks, status, deleteList, editList }) => {
@@ -9,15 +10,10 @@ const ToDoLists = ({ id, name, tasks, status, deleteList, editList }) => {
             <ul>
                 {tasks.map((task) => {
                     return (
-                        <li
+                        <TaskCard
                             key={task.id}
-                            className="task" >
-                            <p>Title: {task.title}</p>
-                            <p>Description: {task.description}</p>
-                            <p>Deadline: {task.deadline}</p>
-                            <button>complete</button>
-                                                        {task.taskStatus && <p>status: {task.taskStatus}</p>}
-                        </li>
+                            task={task}                           
+                        />
                     )
                 })}
             </ul>
