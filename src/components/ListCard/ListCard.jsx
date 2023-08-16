@@ -2,26 +2,27 @@ import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import "./styles/CardList.css"
 import { FormTask } from '../FormTask';
-import { TaskCard } from './TaskCard';
+import { TaskCard } from '../TaskCard';
+import { getTaskById } from '../../utils/utils';
 
-
-const CardList = ({ listEdit, updateLists, close, addToLists, action }) => {
+const ListCard = ({ listData, addEditedList, close, addNewList }) => {
 
     const [list, setList] = useState(
-        listEdit || {
+        listData || {
             id: "",
             name: "",
             listStatus: false,
             tasks: []
         }
     );
-    const [taskById, setTaskById] = useState();
+    const [taskForEdit, setTaskForEdit] = useState();
     const [error, setError] = useState(false);
-    const [isEdit, setIsEdit] = useState(false);
+    const [isEditList, setIsEditList] = useState(false);
+    const [isEditTask, setIsEditTask] = useState(false);
 
     const { id, name, listStatus, tasks } = list
 
-
+    // seva new/edit list card
     const onSubmit = () => {
 
         if (name.length <= 0 || tasks.length === 0) {
@@ -35,12 +36,12 @@ const CardList = ({ listEdit, updateLists, close, addToLists, action }) => {
             tasks: tasks
         };
 
-        if (action === "edit") updateLists(newList);
-        if (action === "create") addToLists(newList);
+        if (isEditList) addEditedList(newList);
+        if (isEditList) addNewList(newList);
 
         close();
     }
-
+    // delite task by id
     const deleteTaskById = (taskId) => {
         setList((prevList) => {
             const newTasks = prevList.tasks.filter((task) => taskId !== task.id);
@@ -48,11 +49,13 @@ const CardList = ({ listEdit, updateLists, close, addToLists, action }) => {
         });
     }
 
-    const getTaskById = (taskId) => {
-        setTaskById(tasks.filter((task) => taskId === task.id));
-        setIsEdit(true);
+    // open task from edit by id 
+    const openEtitTaskCard = (taskId) => {
+        console.log("openEtitTaskCard");
+        setTaskForEdit(getTaskById(taskId, tasks));
+        isEditTask(true);
     }
-
+    // add new task to list
     const setNewTask = (newTask) => {
         setList((prevList) => {
             const newTasks = [newTask, ...prevList.tasks];
@@ -61,16 +64,17 @@ const CardList = ({ listEdit, updateLists, close, addToLists, action }) => {
         setError(false);
     }
 
+    // save edit task to list by id
     const setEditTask = (editTask) => {
-        debugger
         setList((prevList) => {
             const newTasks = prevList.tasks.map((task) => editTask.id === task.id ? editTask : task);
             return { ...prevList, tasks: newTasks };
         });
-        setIsEdit(false);
+        setIsEditList(false);
     }
 
-    const handleChange = (e) => {
+    // add name of list
+    const addNameOfList = (e) => {
         e.preventDefault();
         setList((prevList) => {
             return { ...prevList, name: e.target.value };
@@ -85,31 +89,31 @@ const CardList = ({ listEdit, updateLists, close, addToLists, action }) => {
                     &times;
                 </span>
 
-                <h2>{listEdit ? "Edit List" : "New List"}</h2>
+                <h2>{listData ? "Edit List" : "New List"}</h2>
 
                 <div className="input-name-wrapper" >
                     <label>Name:</label>
                     <input
                         type='text'
                         value={name}
-                        onChange={handleChange}
+                        onChange={addNameOfList}
                         placeholder={error ? "please fill in the field" : ""}
                     />
                 </div>
 
-                {!isEdit && <div className="form-wrapper">
+                {!isEditList && <div className="form-wrapper">
                     <h3>Create new task</h3>
                     <FormTask
                         setNewTask={setNewTask}
                     />
                 </div>}
 
-                {isEdit && <div className="form-wrapper-edit">
+                {isEditList && <div className="form-wrapper-edit">
                     <h3>Edit task</h3>
                     <FormTask
                         setEditTask={setEditTask}
-                        editTask={taskById[0]}
-                        action={"edit"}
+                        task={taskForEdit}
+                        isEditList={isEditList}
                     />
                 </div>}
                 <ul>
@@ -118,8 +122,8 @@ const CardList = ({ listEdit, updateLists, close, addToLists, action }) => {
                             <TaskCard
                                 key={task.id}
                                 task={task}
-                                isEdit={isEdit}
-                                onClickEditBtn={getTaskById}
+                                isEditTask={true}
+                                onClickEditBtn={openEtitTaskCard}
                                 deleteTaskById={deleteTaskById}
                             />
                         )
@@ -132,6 +136,6 @@ const CardList = ({ listEdit, updateLists, close, addToLists, action }) => {
     );
 }
 
-CardList.defaultProps = { action: "create" };
+ListCard.defaultProps = { action: "create" };
 
-export default CardList;
+export default ListCard;

@@ -5,10 +5,10 @@ import classNames from 'classnames';
 import moment from 'moment/moment';
 
 
-const FormTask = ({ setNewTask, editTask, setEditTask, action }) => {
+const FormTask = ({ setNewTask, task, setEditTask, isEditList }) => {
 
     const [formState, setFormState] = useState(
-        editTask || {
+        task || {
             id: "",
             title: "",
             description: "",
@@ -38,7 +38,7 @@ const FormTask = ({ setNewTask, editTask, setEditTask, action }) => {
             taskStatus: taskStatus || ""
         }
 
-        if (action === "edit") {
+        if (isEditList) {
             setEditTask(newTask)
         } else {
             setNewTask(newTask);
@@ -97,10 +97,10 @@ const FormTask = ({ setNewTask, editTask, setEditTask, action }) => {
                     onChange={handleChange}
                 />
             </div>
-            <button type='submit'>{action === "edit" ? "Save Task" : "Add Task"} </button>
+            <button type='submit'>{isEditList ? "Save Task" : "Add Task"} </button>
         </form>
     );
 };
 
-FormTask.defaultProps = { action: "create" };
+FormTask.defaultProps = { isEditList: false };
 export default FormTask

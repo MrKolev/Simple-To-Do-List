@@ -1,5 +1,5 @@
 
-function StatusDropdown({ id, updateTaskStatus, taskStatus }) {
+const StatusDropdown = ({ id, updateTaskStatus, taskStatus }) => {
 
   const handleStatusChange = (event) => {
     updateTaskStatus(id, event.target.value);
@@ -8,7 +8,7 @@ function StatusDropdown({ id, updateTaskStatus, taskStatus }) {
   return (
     <div>
       {(taskStatus === 'WAITING' || taskStatus === 'UNCOMPLETED') &&
-        <label>
+        <><label>
           <input
             type="radio"
             value="COMPLETED"
@@ -16,8 +16,10 @@ function StatusDropdown({ id, updateTaskStatus, taskStatus }) {
             onChange={handleStatusChange}
           />
           COMPLETED
-        </label>}
-        {taskStatus === 'WAITING' &&
+        </label>
+          </>}
+
+      {taskStatus === 'WAITING' &&
         <label>
           <input
             type="radio"
@@ -27,8 +29,29 @@ function StatusDropdown({ id, updateTaskStatus, taskStatus }) {
           />
           DISABLED
         </label>}
-      {taskStatus === 'COMPLETED' &&
+
+      {taskStatus === 'DISABLED' &&
         <label>
+          <input
+            type="radio"
+            value="DISABLED"
+            checked={taskStatus === 'DISABLED'}
+            onChange={handleStatusChange}
+          />
+          DISABLED
+        </label>}
+
+      {taskStatus === 'COMPLETED' &&
+        <><label>
+          <label>
+            <input
+              type="radio"
+              value="COMPLETED"
+              checked={taskStatus === 'COMPLETED'}
+              onChange={handleStatusChange}
+            />
+            COMPLETED
+          </label>
           <input
             type="radio"
             value="UNCOMPLETED"
@@ -36,7 +59,8 @@ function StatusDropdown({ id, updateTaskStatus, taskStatus }) {
             onChange={handleStatusChange}
           />
           UNCOMPLETED
-        </label>}
+        </label>
+        </>}
     </div>
   );
 }

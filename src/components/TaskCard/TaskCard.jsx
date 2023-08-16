@@ -4,30 +4,38 @@ import StatusDropdown from "./Status";
 
 
 
-const TaskCard = ({ task, isEdit, onClickEditBtn, deleteTaskById }) => {
+const TaskCard = ({ task, isEditTask, onClickEditBtn, deleteTaskById, updateTaskStatus }) => {
 
     const { id, title, description, deadline, taskStatus } = task;
 
     return (
         <li className="task-card" >
-            <div className="task-card-tools-wrap" > {!isEdit && <BsFillTrashFill
-                onClick={() => deleteTaskById(id)}
-                className="delete-btn"
-            >Delete</BsFillTrashFill>}
-                {!isEdit && <BsFillPencilFill
-                    onClick={() => onClickEditBtn(id)}
-                    className="edit-btn"
-                >Delete</BsFillPencilFill>}
-                <div class="tooltip">
-                <span className="task-status">
-                    {taskStatus === 'COMPLETED' && <BsCheckCircle color="#4CAF50" />}
-                    {taskStatus === 'DISABLED' && <BsXCircle color="#9E9E9E" />}
-                    {taskStatus === 'UNCOMPLETED' && <BsXCircle color="#FF9800" />}
-                    {taskStatus === 'WAITING' && <BsClock color="#2196F3" />}
-                </span>
-                    <span class="tooltiptext"><StatusDropdown/>/StatusDropdown></span>
-                </div>
-                
+            <div className="task-card-tools-wrap" >
+                {isEditTask &&
+                    <BsFillTrashFill
+                        onClick={() => deleteTaskById(id)}
+                        className="delete-btn" />}
+                {isEditTask &&
+                    <BsFillPencilFill
+                        onClick={() => onClickEditBtn(id)}
+                        className="edit-btn" />}
+                {isEditTask &&
+                    <div className="tooltip">
+                        <span className="task-status">
+                            {taskStatus === 'COMPLETED' && <BsCheckCircle color="#4CAF50" />}
+                            {taskStatus === 'DISABLED' && <BsXCircle color="#9E9E9E" />}
+                            {taskStatus === 'UNCOMPLETED' && <BsXCircle color="#FF9800" />}
+                            {taskStatus === 'WAITING' && <BsClock color="#2196F3" />}
+                        </span>
+                        <span className="tooltiptext">
+                            <StatusDropdown
+                                id={id}
+                                updateTaskStatus={updateTaskStatus}
+                                taskStatus={taskStatus}
+                            />
+                        </span>
+                    </div>}
+
             </div>
 
             <table>
@@ -50,6 +58,6 @@ const TaskCard = ({ task, isEdit, onClickEditBtn, deleteTaskById }) => {
     )
 }
 
-TaskCard.defaultProps = { isEdit: false };
+TaskCard.defaultProps = { isEditTask: false };
 
 export default TaskCard;

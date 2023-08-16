@@ -1,4 +1,5 @@
-import { TaskCard } from "../CardList/TaskCard";
+import { BsFillPencilFill, BsTrash3Fill } from "react-icons/bs";
+import { TaskCard } from "../TaskCard";
 import "./styles/ToDoLists.css"
 
 const ToDoLists = ({ id, name, tasks, status, deleteList, editList,updateTaskStatus }) => {
@@ -19,8 +20,8 @@ const ToDoLists = ({ id, name, tasks, status, deleteList, editList,updateTaskSta
                     )
                 })}
             </ul>
-            <button onClick={() => editList(id)} >edit</button>
-            <button onClick={() => deleteList(id)}>delete</button>
+            <BsFillPencilFill className="edit-btn" onClick={() => editList(id)} >edit</BsFillPencilFill>
+            <BsTrash3Fill className="delete-btn" onClick={() => deleteList(id)}>delete</BsTrash3Fill>
         </div>
     )
 };

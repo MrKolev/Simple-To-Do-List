@@ -41,4 +41,8 @@ export const checkTaskExpired = (lists) => {
       return false;
     }
 
-  }
+  };
+
+  export const getTaskById = (taskId,tasks) => {
+    return tasks.filter((task) => taskId === task.id)[0];    
+ }

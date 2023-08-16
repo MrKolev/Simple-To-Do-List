@@ -1,8 +1,8 @@
-import classes from "./App.module.css"
+import classes from "./App.module.css";
 import { useEffect, useState } from 'react';
-import { ToDoLists } from "./components/ToDoLists"
-import { CardList } from './components/CardList';
-import { checkTaskExpired, updateTaskStatusById } from "./utils/updateTasks";
+import { ToDoLists } from "./components/ToDoLists";
+import { ListCard } from './components/ListCard';
+import { checkTaskExpired, updateTaskStatusById } from "./utils/utils";
 
 
 // const toDoLists = [{
@@ -28,71 +28,79 @@ import { checkTaskExpired, updateTaskStatusById } from "./utils/updateTasks";
 
 const App = () => {
 
-  const [lists, setLists] = useState(JSON.parse(localStorage.getItem("data")));
+  const [toDoList, setToDoList] = useState(JSON.parse(localStorage.getItem("data")));
   const [listById, setListById] = useState({});
-  const [showCardList, setShowCardList] = useState(false);
+  const [showCreateCardList, setShowCreateCardList] = useState(false);
   const [showEditCardList, setShowEditCardList] = useState(false);
 
+  // check expired tasks and update the localStorage
   useEffect(() => {
-    const newList = checkTaskExpired(lists)
-    if(newList){
+
+    const checkedToDoList = checkTaskExpired(toDoList)
+
+    if (checkedToDoList) {
       console.log("set New list from checkTaskExpired(lists)");
-      setLists(newList)
-    }    
-    localStorage.setItem("data", JSON.stringify(lists));
-  }, [lists]);
-  
+      setToDoList(checkedToDoList);
+    };
 
-  const addToLists = (newList) => {
-    setLists((prevLists) => [newList, ...prevLists]);
+    localStorage.setItem("data", JSON.stringify(toDoList));
+  }, [toDoList]);
+
+  // adding the created new list to the ToDoList
+  const addNewList = (newList) => {
+    setToDoList((prevLists) => [newList, ...prevLists]);
   }
 
-  const updateLists = (newList) => {
-    setLists(lists.map((list) => newList.id === list.id ? newList : list));
-  }
-  const updateTaskStatus = (id, taskStatus) => {
-    const newList = updateTaskStatusById(lists, id, taskStatus);
-    setLists(newList)
-    console.log(newList);
-  }
-
-  const deleteList = (listId) => {
-    const filteredList = lists.filter((list) => listId !== list.id);
-    setLists(filteredList);
-  }
-
-
-  const openCardList = () => {
-    setShowCardList(true);
+  // save edtited list to ToDoList
+  const addEditedList = (newList) => {
+    setToDoList(toDoList.map((list) => newList.id === list.id ? newList : list));
   };
 
+  // update task status
+  const updateTaskStatus = (id, taskStatus) => {
+    const newList = updateTaskStatusById(toDoList, id, taskStatus);
+    setToDoList(newList);
+  };
+
+  // deletion list by id
+  const deleteList = (listId) => {
+    const filteredList = toDoList.filter((list) => listId !== list.id);
+    setToDoList(filteredList);
+  };
+
+// opening the card to edit a list by id
   const openEditCardList = (listId) => {
-    const listById = lists.filter((list) => listId === list.id);
+    const listById = toDoList.filter((list) => listId === list.id);
     setListById(listById[0]);
     setShowEditCardList(true);
   }
 
+
+// opening the card to create a new list
+const openCreateNewList = () =>{
+  setShowCreateCardList(true);
+}
   return (
     <div className={classes.app}>
-      <button className={classes.button} onClick={openCardList}>create</button>
+      <button className={classes.button} onClick={openCreateNewList}>create</button>
 
-      {showCardList && <CardList
-        listEdit={null}
-        updateLists={updateLists}
-        close={() => setShowCardList(false)}
-        addToLists={addToLists}
+      {showCreateCardList && <ListCard
+        listData={null}
+        addEditedList={addEditedList}
+        close={() => setShowCreateCardList(false)}
+        addNewList={addNewList}
       />}
 
-      {showEditCardList && <CardList
+      {showEditCardList && <ListCard
         action={"edit"}
         listEdit={listById}
-        updateLists={updateLists}
+        updateLists={addEditedList}
         close={() => setShowEditCardList(false)}
-        addToLists={addToLists}
+        addToLists={addNewList}
       />}
       <div>
-        {lists.length === 0 && <p>Еmpty list...</p>}
-        {lists.map((list) => {
+        {toDoList.length === 0 && <p>Еmpty list...</p>}
+        {toDoList.map((list) => {
           return (<ToDoLists
             status={list.listStatus}
             key={list.id}
