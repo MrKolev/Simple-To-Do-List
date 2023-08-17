@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import "./styles/FormTask.css"
-import classNames from 'classnames';
 import moment from 'moment/moment';
 
 
@@ -24,15 +23,18 @@ const FormTask = ({
 
     const { id, title, description, deadline, taskStatus } = formState;
 
-    const [error, setError] = useState(false);
+    const [errorTitle, setErrorTitle] = useState(false);
+    const [errorDescription, setErrorDescription] = useState(false);
+    const [errorDeadline, setErrorDeadline] = useState(false);
 
-    const submitHandler = (event) => {
-        event.preventDefault();
+    const submitHandler = (e) => {
+        e.preventDefault();
 
-        if (title === "" ||
-            description === "" ||
-            deadline === "") {
-            return setError(true);
+        if (title === "" || description === "" || deadline === "") {
+            if (title === "") setErrorTitle(true);
+            if (description === "") setErrorDescription(true);
+            if (deadline === "") setErrorDeadline(true);
+            return;
         }
 
         const newTask = {
@@ -42,7 +44,7 @@ const FormTask = ({
             id: id || uuidv4(),
             taskStatus: taskStatus || "WAITING"
         }
-        debugger
+
         if (isEditTaskMode) {
             setEditTask(newTask)
         } else {
@@ -56,12 +58,20 @@ const FormTask = ({
             status: false,
         })
 
-        setError(false);
+        setErrorTitle(false);
+        setErrorDescription(false);
+        setErrorDeadline(false);
 
     };
 
     const handleChange = (e) => {
         e.preventDefault();
+
+        if (e.target.value === "") {
+            e.target.className = "input-error"
+        } else {
+            e.target.className = "form-input"
+        }
         setFormState({ ...formState, [e.target.name]: e.target.value });
     };
 
@@ -72,28 +82,28 @@ const FormTask = ({
             <div className="form-task-wrap-input">
                 <label>TITLE :</label>
                 <input
-                    className={classNames(error && "input-error")}
+                    className={errorTitle ? "input-error" : "form-input"}
                     type='text'
                     name="title"
                     value={title}
-                    placeholder={error ? 'Please enter the field!' : ""}
+                    placeholder={errorTitle ? 'Please enter the field!' : ""}
                     onChange={handleChange}
                 />
             </div>
             <div className="form-task-wrap-input">
                 <label>DESCRIPTION :</label>
                 <textarea
-                    className={classNames(error && "input-error")}
+                    className={errorDescription ? "input-error" : "form-input"}
                     name="description"
                     value={description}
-                    placeholder={error ? 'Please enter the field!' : ""}
+                    placeholder={errorDescription ? 'Please enter the field!' : ""}
                     onChange={handleChange}
                 />
             </div>
             <div className="form-task-wrap-input">
                 <label>DEADLINE :</label>
                 <input
-                    className={classNames(error && "input-error")}
+                    className={errorDeadline ? "input-error" : "form-input"}
                     type='date'
                     name='deadline'
                     min={moment().format("YYYY-MM-DD")}

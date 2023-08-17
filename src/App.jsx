@@ -2,7 +2,7 @@ import classes from "./App.module.css";
 import { useEffect, useState } from 'react';
 import { ToDoLists } from "./components/ToDoLists";
 import { ListCard } from './components/ListCard';
-import { checkTaskExpired, updateTaskStatusById } from "./utils/utils";
+import { checkListStatus, checkTaskExpired, updateTaskStatusById } from "./utils/utils";
 
 
 // const toDoLists = [{
@@ -35,16 +35,15 @@ const App = () => {
 
   // check expired tasks and update the localStorage
   useEffect(() => {
-
     const checkedToDoList = checkTaskExpired(toDoList)
-
     if (checkedToDoList) {
-      console.log("set New list from checkTaskExpired(lists)");
       setToDoList(checkedToDoList);
     };
 
     localStorage.setItem("data", JSON.stringify(toDoList));
   }, [toDoList]);
+
+
 
   // adding the created new list to the ToDoList
   const addNewList = (newList) => {
@@ -53,19 +52,24 @@ const App = () => {
 
   // save edtited list to ToDoList
   const addEditedList = (newList) => {
-    setToDoList(toDoList.map((list) => newList.id === list.id ? newList : list));
+    const newListEdit = toDoList.map((list) => newList.id === list.id ? newList : list);
+    const newListStatus = checkListStatus(newListEdit);
+    setToDoList(newListStatus);
+
   };
 
   // update task status
   const updateTaskStatus = (id, taskStatus) => {
-    const newList = updateTaskStatusById(toDoList, id, taskStatus);
-    setToDoList(newList);
+    const newListTaskStatus = updateTaskStatusById(toDoList, id, taskStatus);
+    const newListStatus = checkListStatus(newListTaskStatus);
+
+    setToDoList(newListStatus);
   };
 
   // deletion list by id
   const deleteList = (listId) => {
     const isConfirmed = window.confirm('Are you sure you want to delete this list?');
-    
+
     if (isConfirmed) {
       const filteredList = toDoList.filter((list) => listId !== list.id);
       setToDoList(filteredList);
@@ -84,6 +88,7 @@ const App = () => {
   const openCreateNewList = () => {
     setShowCreateCardList(true);
   }
+
   return (
     <div className={classes.app}>
       <button className={classes.button} onClick={openCreateNewList}>create</button>

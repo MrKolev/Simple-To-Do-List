@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import "./styles/CardList.css"
+import "./styles/ListCard.css"
 import { FormTask } from '../FormTask';
 import { TaskCard } from '../TaskCard';
 import { getTaskById } from '../../utils/utils';
@@ -16,16 +16,19 @@ const ListCard = ({ isEditMode, listData, addEditedList, close, addNewList }) =>
         }
     );
     const [taskForEdit, setTaskForEdit] = useState({});
-    const [error, setError] = useState(false);
+    const [errorName, setErrorNeme] = useState(false);
+    const [errorTasks, setErrorTasks] = useState(false);
     const [isEditTaskMode, setIsEditTaskMode] = useState(false)
-
-    // const { id, name, listStatus, tasks } = list
 
     // seva new/edit list card
     const onSubmit = () => {
 
         if (name.length <= 0 || tasks.length === 0) {
-            return setError(true)
+            if(name.length <= 0)setErrorNeme(true);
+            if(tasks.length === 0) setErrorTasks(true)
+  
+            window.scrollTo(0, 0);
+            return 
         };
 
         const newList = {
@@ -53,7 +56,6 @@ const ListCard = ({ isEditMode, listData, addEditedList, close, addNewList }) =>
 
     // open task from edit by id 
     const openEtitTaskCard = (taskId) => {
-        debugger
         setTaskForEdit(getTaskById(taskId, tasks));
         setIsEditTaskMode(true)
 
@@ -64,7 +66,8 @@ const ListCard = ({ isEditMode, listData, addEditedList, close, addNewList }) =>
             const newTasks = [newTask, ...prevList.tasks];
             return { ...prevList, tasks: newTasks };
         });
-        setError(false);
+        setErrorNeme(false);
+        setErrorTasks(false);
     }
 
     // save edit task to list by id
@@ -74,16 +77,24 @@ const ListCard = ({ isEditMode, listData, addEditedList, close, addNewList }) =>
             return { ...prevList, tasks: newTasks };
         });
         setIsEditTaskMode(false);
+        setErrorTasks(false);
+        
 
     }
 
     // add name of list
     const addNameOfList = (e) => {
         e.preventDefault();
+
+        if(e.target.value === ""){
+            e.target.className = "input-error"
+        }else{
+            e.target.className = "neme-input"
+        }
+
         setList((prevList) => {
             return { ...prevList, name: e.target.value };
         });
-        setError(false);
     };
 
     return (
@@ -99,13 +110,14 @@ const ListCard = ({ isEditMode, listData, addEditedList, close, addNewList }) =>
                     <label>Name:</label>
                     <input
                         type='text'
+                        className={errorName ? "input-error" : "neme-input"}
                         value={name}
                         onChange={addNameOfList}
-                        placeholder={error ? "please fill in the field" : ""}
+                        placeholder={errorName ? "please fill in the field" : ""}
                     />
                 </div>
 
-                {!isEditTaskMode && <div className="form-wrapper">
+                {!isEditTaskMode && <div className={errorTasks ? "error-form-wrapper" : "form-wrapper"}>
                     <h3>Create new task</h3>
                     <FormTask
                         addNewTask={addNewTask}
@@ -113,7 +125,7 @@ const ListCard = ({ isEditMode, listData, addEditedList, close, addNewList }) =>
                     />
                 </div>}
 
-                {isEditTaskMode && <div className="form-wrapper-edit">
+                {isEditTaskMode && <div className={errorTasks ? "error-form-wrapper-edit" : "form-wrapper-edit"}>
                     <h3>Edit task</h3>
                     <FormTask
                         setEditTask={setEditTask}
@@ -127,7 +139,7 @@ const ListCard = ({ isEditMode, listData, addEditedList, close, addNewList }) =>
                         return (
                             <TaskCard
                                 key={task.id}
-                                hideButtons={isEditTaskMode}                               
+                                hideButtons={isEditTaskMode}
                                 task={task}
                                 onClickEditBtn={openEtitTaskCard}
                                 deleteTaskById={deleteTaskById}
@@ -135,8 +147,10 @@ const ListCard = ({ isEditMode, listData, addEditedList, close, addNewList }) =>
                         )
                     })}
                 </ul>
-                <button onClick={close}>Close</button>
-                <button disabled={error} onClick={onSubmit}>Save</button>
+                <div>
+                    <button className="save-btn" onClick={onSubmit}>Save</button>
+                    <button className="close-btn" onClick={close}>Close</button>
+                </div>
             </div>
         </div>
     );

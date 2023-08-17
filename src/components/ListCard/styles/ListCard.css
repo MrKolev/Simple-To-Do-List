@@ -58,6 +58,27 @@
   background-color: rgb(254, 221, 180);
 }
 
+.error-form-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  border-radius: 12px;
+  border: 2px solid #f90000;
+  margin: 0 auto;
+  background-color: bisque;
+}
+
+.error-form-wrapper-edit {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  border-radius: 12px;
+  border: 2px solid #f90000;
+  margin: 0 auto;
+  background-color: rgb(254, 221, 180);
+}
+
+
 
 .form-wrapper h3 {
   margin-top: 15px;
@@ -66,29 +87,29 @@
 
 .input-name-wrapper {
   display: flex;
-  flex-direction: row;
-  width: 84%;
-  align-items: flex-end;
-  margin: 5px auto;
+  flex-direction: column;
+  width: 80%;
+  border-radius: 12px;
   border: 1px solid #ccc;
-  border: none;
-
+  margin: 0 auto;
+  background-color: bisque;
+  align-items: center;
+  margin-bottom: 10px;
 }
 
-.input-name-wrapper input {
-  border: none;
-  border-bottom: 3px solid #deddcc;
-  border-bottom-right-radius: 18px;
+.input-error {
+  border: 2px solid red;
+  border-radius: 4px;
+  margin-bottom: 10px;
 }
 
-.input-name-wrapper label {
-  border: none;
-  border-bottom: 3px solid #deddcc;
-  border-bottom-left-radius: 18px;
+.neme-input {
+  border: 1px solid white;
+  border-radius: 4px;
+  margin-bottom: 10px;
 }
 
-.input-name-wrapper input:focus {
+.neme-input,
+.input-error:focus {
   outline: none;
-  border-bottom-color: #08adce;
-
 }

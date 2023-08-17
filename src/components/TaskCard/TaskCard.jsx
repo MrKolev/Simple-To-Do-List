@@ -1,13 +1,13 @@
 import { BsFillTrashFill, BsFillPencilFill, BsCheckCircle, BsXCircle, BsClock } from "react-icons/bs";
 import "./styles/TaskCard.css"
-import StatusDropdown from "./Status";
+import StatusTooltip from "./Status";
 
 
 
 const TaskCard = ({
     task,
     hideButtons,
-    showStatusDropdown,
+    showStatusTooltip,
     onClickEditBtn,
     deleteTaskById,
     updateTaskStatus }) => {
@@ -30,8 +30,8 @@ const TaskCard = ({
                 <div className="tooltip">
 
 
-                    {showStatusDropdown && <span className="tooltiptext">
-                        <StatusDropdown
+                    {showStatusTooltip && <span className="tooltiptext">
+                        <StatusTooltip
                             id={id}
                             updateTaskStatus={updateTaskStatus}
                             taskStatus={taskStatus}
@@ -66,6 +66,6 @@ const TaskCard = ({
     )
 }
 
-TaskCard.defaultProps = { hideStatusDropdown: true };
+TaskCard.defaultProps = { hideStatusTooltip: true };
 
 export default TaskCard;

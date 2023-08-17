@@ -1,5 +1,5 @@
 
-const StatusDropdown = ({ id, updateTaskStatus, taskStatus }) => {
+const StatusTooltip = ({ id, updateTaskStatus, taskStatus }) => {
 
   const handleStatusChange = (event) => {
     updateTaskStatus(id, event.target.value);
@@ -88,4 +88,4 @@ const StatusDropdown = ({ id, updateTaskStatus, taskStatus }) => {
   );
 }
 
-export default StatusDropdown;
+export default StatusTooltip;

@@ -10,17 +10,16 @@
   align-items: center;
 }
 
-.delete-btn,
-.task-status,
-.edit-btn {
+
+.task-status {
   cursor: pointer;
   font-size: 18px;
-  margin-right: 10px;  
+  margin-right: 10px;
 }
 
 .delete-btn:hover,
 .edit-btn:hover {
-  color: red;
+  color: rgb(250, 164, 164);
 }
 
 .task-details {
@@ -53,15 +52,15 @@ tbody td {
   border: 1px solid #ccc;
   padding: 10px;
   text-align: left;
-  overflow: hidden; 
-  max-width: 200px; 
-  text-overflow: ellipsis; 
+  overflow: hidden;
+  max-width: 200px;
+  text-overflow: ellipsis;
 }
 
 tbody td:hover {
-  white-space: normal; 
-  overflow: visible; 
-  text-overflow: initial; 
+  white-space: normal;
+  overflow: visible;
+  text-overflow: initial;
 }
 
 
@@ -88,11 +87,11 @@ tbody td:hover {
 .tooltip:hover .tooltiptext {
   visibility: visible;
   opacity: 1;
-  
+
 }
 
 .tooltip:hover label:hover {
   visibility: visible;
   background-color: #0bd0f7;
-  border-radius: 3px;  
+  border-radius: 3px;
 }

@@ -16,6 +16,7 @@ export const CustomModal = (props) => {
                         type='text'
                         value={name}
                         onChange={addNameOfList}
+                        className=""
                         placeholder={error ? "please fill in the field" : ""}
                     />
                 </div>

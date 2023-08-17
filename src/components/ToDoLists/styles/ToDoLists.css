@@ -18,15 +18,9 @@
 }
 
 .delete-btn:hover {
-  color: red;
-  transform: translateY(-3px);
+  color: red;  
 }
 
 .edit-btn:hover {
-  color: blue;
-  transform: translateY(-3px);
-}
-.delete-btn,
-.edit-btn {
-  transition: transform 0.2s ease-in-out;
+  color: blue;  
 }

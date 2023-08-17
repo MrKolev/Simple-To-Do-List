@@ -15,13 +15,14 @@ const ToDoLists = ({ id, name, tasks, status, deleteList, editList, updateTaskSt
                             key={task.id}
                             task={task}
                             hideButtons={true}
-                            showStatusDropdown={true}
+                            showStatusTooltip={status === "COMPLETED" ? false : true}
                             updateTaskStatus={updateTaskStatus}
+                            
                         />
                     )
                 })}
             </ul>
-            <button className="edit-btn" onClick={() => editList(id)}> <BsFillPencilFill />EDIT</button>
+            {status !== "COMPLETED" && <button className="edit-btn" onClick={() => editList(id)}> <BsFillPencilFill />EDIT</button>}
             <button className="delete-btn" onClick={() => deleteList(id)}><BsTrash3Fill/> DELETE</button>
         </div>
     )
