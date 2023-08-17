@@ -7,20 +7,9 @@ const StatusDropdown = ({ id, updateTaskStatus, taskStatus }) => {
 
   return (
     <div>
-      {(taskStatus === 'WAITING' || taskStatus === 'UNCOMPLETED') &&
-        <><label>
-          <input
-            type="radio"
-            value="COMPLETED"
-            checked={taskStatus === 'COMPLETED'}
-            onChange={handleStatusChange}
-          />
-          COMPLETED
-        </label>
-          </>}
-
+     
       {taskStatus === 'WAITING' &&
-        <label>
+        <><label>
           <input
             type="radio"
             value="DISABLED"
@@ -28,7 +17,60 @@ const StatusDropdown = ({ id, updateTaskStatus, taskStatus }) => {
             onChange={handleStatusChange}
           />
           DISABLED
-        </label>}
+        </label>
+          <label>
+            <input
+              type="radio"
+              value="COMPLETED"
+              onChange={handleStatusChange}
+            />
+            COMPLETED
+          </label></>}
+
+     
+      {taskStatus === 'COMPLETED' &&
+        <>
+          <label>
+            <input
+              type="radio"
+              value="COMPLETED"
+              checked={taskStatus === 'COMPLETED'}
+              onChange={handleStatusChange}
+            />
+            COMPLETED
+          </label>
+          <label>
+            <input
+              type="radio"
+              value="UNCOMPLETED"
+              onChange={handleStatusChange}
+            />
+            UNCOMPLETED
+          </label>
+        </>}
+
+      
+      {taskStatus === 'UNCOMPLETED' &&
+        <>
+          <label>
+            <input
+              type="radio"
+              value="COMPLETED"
+              onChange={handleStatusChange}
+            />
+            COMPLETED
+          </label>
+          <label>
+            <input
+              type="radio"
+              value="UNCOMPLETED"
+              checked={taskStatus === 'UNCOMPLETED'}
+              onChange={handleStatusChange}
+            />
+            UNCOMPLETED
+          </label>
+        </>}
+
 
       {taskStatus === 'DISABLED' &&
         <label>
@@ -41,26 +83,7 @@ const StatusDropdown = ({ id, updateTaskStatus, taskStatus }) => {
           DISABLED
         </label>}
 
-      {taskStatus === 'COMPLETED' &&
-        <><label>
-          <label>
-            <input
-              type="radio"
-              value="COMPLETED"
-              checked={taskStatus === 'COMPLETED'}
-              onChange={handleStatusChange}
-            />
-            COMPLETED
-          </label>
-          <input
-            type="radio"
-            value="UNCOMPLETED"
-            checked={taskStatus === 'UNCOMPLETED'}
-            onChange={handleStatusChange}
-          />
-          UNCOMPLETED
-        </label>
-        </>}
+
     </div>
   );
 }

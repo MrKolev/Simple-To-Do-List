@@ -64,11 +64,15 @@ const App = () => {
 
   // deletion list by id
   const deleteList = (listId) => {
-    const filteredList = toDoList.filter((list) => listId !== list.id);
-    setToDoList(filteredList);
+    const isConfirmed = window.confirm('Are you sure you want to delete this list?');
+    
+    if (isConfirmed) {
+      const filteredList = toDoList.filter((list) => listId !== list.id);
+      setToDoList(filteredList);
+    }
   };
 
-// opening the card to edit a list by id
+  // opening the card to edit a list by id
   const openEditCardList = (listId) => {
     const listById = toDoList.filter((list) => listId === list.id);
     setListById(listById[0]);
@@ -76,10 +80,10 @@ const App = () => {
   }
 
 
-// opening the card to create a new list
-const openCreateNewList = () =>{
-  setShowCreateCardList(true);
-}
+  // opening the card to create a new list
+  const openCreateNewList = () => {
+    setShowCreateCardList(true);
+  }
   return (
     <div className={classes.app}>
       <button className={classes.button} onClick={openCreateNewList}>create</button>
@@ -89,14 +93,14 @@ const openCreateNewList = () =>{
         addEditedList={addEditedList}
         close={() => setShowCreateCardList(false)}
         addNewList={addNewList}
+        isEditMode={false}
       />}
 
       {showEditCardList && <ListCard
-        action={"edit"}
-        listEdit={listById}
-        updateLists={addEditedList}
+        listData={listById}
+        addEditedList={addEditedList}
         close={() => setShowEditCardList(false)}
-        addToLists={addNewList}
+        isEditMode={true}
       />}
       <div>
         {toDoList.length === 0 && <p>Еmpty list...</p>}

@@ -4,38 +4,46 @@ import StatusDropdown from "./Status";
 
 
 
-const TaskCard = ({ task, isEditTask, onClickEditBtn, deleteTaskById, updateTaskStatus }) => {
+const TaskCard = ({
+    task,
+    hideButtons,
+    showStatusDropdown,
+    onClickEditBtn,
+    deleteTaskById,
+    updateTaskStatus }) => {
 
     const { id, title, description, deadline, taskStatus } = task;
 
     return (
         <li className="task-card" >
             <div className="task-card-tools-wrap" >
-                {isEditTask &&
+                {!hideButtons &&
                     <BsFillTrashFill
                         onClick={() => deleteTaskById(id)}
                         className="delete-btn" />}
-                {isEditTask &&
+
+                {!hideButtons &&
                     <BsFillPencilFill
                         onClick={() => onClickEditBtn(id)}
                         className="edit-btn" />}
-                {isEditTask &&
-                    <div className="tooltip">
-                        <span className="task-status">
-                            {taskStatus === 'COMPLETED' && <BsCheckCircle color="#4CAF50" />}
-                            {taskStatus === 'DISABLED' && <BsXCircle color="#9E9E9E" />}
-                            {taskStatus === 'UNCOMPLETED' && <BsXCircle color="#FF9800" />}
-                            {taskStatus === 'WAITING' && <BsClock color="#2196F3" />}
-                        </span>
-                        <span className="tooltiptext">
-                            <StatusDropdown
-                                id={id}
-                                updateTaskStatus={updateTaskStatus}
-                                taskStatus={taskStatus}
-                            />
-                        </span>
-                    </div>}
 
+                <div className="tooltip">
+
+
+                    {showStatusDropdown && <span className="tooltiptext">
+                        <StatusDropdown
+                            id={id}
+                            updateTaskStatus={updateTaskStatus}
+                            taskStatus={taskStatus}
+                        />
+                    </span>}
+                    <span className="task-status">
+                        {taskStatus === 'COMPLETED' && <BsCheckCircle color="#4CAF50" />}
+                        {taskStatus === 'DISABLED' && <BsXCircle color="#9E9E9E" />}
+                        {taskStatus === 'UNCOMPLETED' && <BsXCircle color="#FF9800" />}
+                        {taskStatus === 'WAITING' && <BsClock color="#2196F3" />}
+                    </span>
+                </div>
             </div>
 
             <table>
@@ -58,6 +66,6 @@ const TaskCard = ({ task, isEditTask, onClickEditBtn, deleteTaskById, updateTask
     )
 }
 
-TaskCard.defaultProps = { isEditTask: false };
+TaskCard.defaultProps = { hideStatusDropdown: true };
 
 export default TaskCard;

@@ -2,7 +2,7 @@ import { BsFillPencilFill, BsTrash3Fill } from "react-icons/bs";
 import { TaskCard } from "../TaskCard";
 import "./styles/ToDoLists.css"
 
-const ToDoLists = ({ id, name, tasks, status, deleteList, editList,updateTaskStatus }) => {
+const ToDoLists = ({ id, name, tasks, status, deleteList, editList, updateTaskStatus }) => {
 
     return (
         <div className="list-wrapper" >
@@ -14,14 +14,15 @@ const ToDoLists = ({ id, name, tasks, status, deleteList, editList,updateTaskSta
                         <TaskCard
                             key={task.id}
                             task={task}
-                            isEdit={true}
-                            updateTaskStatus={updateTaskStatus}                           
+                            hideButtons={true}
+                            showStatusDropdown={true}
+                            updateTaskStatus={updateTaskStatus}
                         />
                     )
                 })}
             </ul>
-            <BsFillPencilFill className="edit-btn" onClick={() => editList(id)} >edit</BsFillPencilFill>
-            <BsTrash3Fill className="delete-btn" onClick={() => deleteList(id)}>delete</BsTrash3Fill>
+            <button className="edit-btn" onClick={() => editList(id)}> <BsFillPencilFill />EDIT</button>
+            <button className="delete-btn" onClick={() => deleteList(id)}><BsTrash3Fill/> DELETE</button>
         </div>
     )
 };

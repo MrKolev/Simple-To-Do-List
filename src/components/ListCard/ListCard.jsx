@@ -5,22 +5,21 @@ import { FormTask } from '../FormTask';
 import { TaskCard } from '../TaskCard';
 import { getTaskById } from '../../utils/utils';
 
-const ListCard = ({ listData, addEditedList, close, addNewList }) => {
+const ListCard = ({ isEditMode, listData, addEditedList, close, addNewList }) => {
 
-    const [list, setList] = useState(
+    const [{ id, name, listStatus, tasks }, setList] = useState(
         listData || {
             id: "",
             name: "",
-            listStatus: false,
+            listStatus: "WAITING",
             tasks: []
         }
     );
-    const [taskForEdit, setTaskForEdit] = useState();
+    const [taskForEdit, setTaskForEdit] = useState({});
     const [error, setError] = useState(false);
-    const [isEditList, setIsEditList] = useState(false);
-    const [isEditTask, setIsEditTask] = useState(false);
+    const [isEditTaskMode, setIsEditTaskMode] = useState(false)
 
-    const { id, name, listStatus, tasks } = list
+    // const { id, name, listStatus, tasks } = list
 
     // seva new/edit list card
     const onSubmit = () => {
@@ -36,8 +35,11 @@ const ListCard = ({ listData, addEditedList, close, addNewList }) => {
             tasks: tasks
         };
 
-        if (isEditList) addEditedList(newList);
-        if (isEditList) addNewList(newList);
+        if (isEditMode) {
+            addEditedList(newList);
+        } else {
+            addNewList(newList);
+        }
 
         close();
     }
@@ -51,12 +53,13 @@ const ListCard = ({ listData, addEditedList, close, addNewList }) => {
 
     // open task from edit by id 
     const openEtitTaskCard = (taskId) => {
-        console.log("openEtitTaskCard");
+        debugger
         setTaskForEdit(getTaskById(taskId, tasks));
-        isEditTask(true);
+        setIsEditTaskMode(true)
+
     }
     // add new task to list
-    const setNewTask = (newTask) => {
+    const addNewTask = (newTask) => {
         setList((prevList) => {
             const newTasks = [newTask, ...prevList.tasks];
             return { ...prevList, tasks: newTasks };
@@ -70,7 +73,8 @@ const ListCard = ({ listData, addEditedList, close, addNewList }) => {
             const newTasks = prevList.tasks.map((task) => editTask.id === task.id ? editTask : task);
             return { ...prevList, tasks: newTasks };
         });
-        setIsEditList(false);
+        setIsEditTaskMode(false);
+
     }
 
     // add name of list
@@ -101,19 +105,21 @@ const ListCard = ({ listData, addEditedList, close, addNewList }) => {
                     />
                 </div>
 
-                {!isEditList && <div className="form-wrapper">
+                {!isEditTaskMode && <div className="form-wrapper">
                     <h3>Create new task</h3>
                     <FormTask
-                        setNewTask={setNewTask}
+                        addNewTask={addNewTask}
+                        isEditList={false}
                     />
                 </div>}
 
-                {isEditList && <div className="form-wrapper-edit">
+                {isEditTaskMode && <div className="form-wrapper-edit">
                     <h3>Edit task</h3>
                     <FormTask
                         setEditTask={setEditTask}
                         task={taskForEdit}
-                        isEditList={isEditList}
+                        isEditTaskMode={isEditTaskMode}
+                        close={() => setIsEditTaskMode(false)}
                     />
                 </div>}
                 <ul>
@@ -121,8 +127,8 @@ const ListCard = ({ listData, addEditedList, close, addNewList }) => {
                         return (
                             <TaskCard
                                 key={task.id}
+                                hideButtons={isEditTaskMode}                               
                                 task={task}
-                                isEditTask={true}
                                 onClickEditBtn={openEtitTaskCard}
                                 deleteTaskById={deleteTaskById}
                             />
@@ -139,3 +145,5 @@ const ListCard = ({ listData, addEditedList, close, addNewList }) => {
 ListCard.defaultProps = { action: "create" };
 
 export default ListCard;
+
+

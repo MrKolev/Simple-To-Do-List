@@ -5,7 +5,12 @@ import classNames from 'classnames';
 import moment from 'moment/moment';
 
 
-const FormTask = ({ setNewTask, task, setEditTask, isEditList }) => {
+const FormTask = ({
+    task,
+    addNewTask,
+    setEditTask,
+    isEditTaskMode,
+    close }) => {
 
     const [formState, setFormState] = useState(
         task || {
@@ -35,13 +40,13 @@ const FormTask = ({ setNewTask, task, setEditTask, isEditList }) => {
             description: description,
             deadline: deadline,
             id: id || uuidv4(),
-            taskStatus: taskStatus || ""
+            taskStatus: taskStatus || "WAITING"
         }
-
-        if (isEditList) {
+        debugger
+        if (isEditTaskMode) {
             setEditTask(newTask)
         } else {
-            setNewTask(newTask);
+            addNewTask(newTask);
         }
 
         setFormState({
@@ -71,7 +76,7 @@ const FormTask = ({ setNewTask, task, setEditTask, isEditList }) => {
                     type='text'
                     name="title"
                     value={title}
-                    placeholder={error ? 'Please enter the field!': ""}
+                    placeholder={error ? 'Please enter the field!' : ""}
                     onChange={handleChange}
                 />
             </div>
@@ -81,7 +86,7 @@ const FormTask = ({ setNewTask, task, setEditTask, isEditList }) => {
                     className={classNames(error && "input-error")}
                     name="description"
                     value={description}
-                    placeholder={error ? 'Please enter the field!': ""}
+                    placeholder={error ? 'Please enter the field!' : ""}
                     onChange={handleChange}
                 />
             </div>
@@ -97,10 +102,12 @@ const FormTask = ({ setNewTask, task, setEditTask, isEditList }) => {
                     onChange={handleChange}
                 />
             </div>
-            <button type='submit'>{isEditList ? "Save Task" : "Add Task"} </button>
+            <div className="form-task-wrap-btn">
+                <button className='edit-btn' type='submit'>{isEditTaskMode ? "Save Task" : "Add Task"} </button>
+                {isEditTaskMode && <button className='delete-btn' onClick={close}>close</button>}
+            </div>
         </form>
     );
 };
 
-FormTask.defaultProps = { isEditList: false };
 export default FormTask
