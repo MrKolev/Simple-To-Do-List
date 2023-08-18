@@ -130,7 +130,7 @@ const ListCard = ({ isEditMode, listData, addEditedList, close, addNewList }) =>
                         close={() => setIsEditTaskMode(false)}
                     />
                 </div>}
-                <ul>
+                <ul className="list-tasks-wrap">
                     {tasks.map((task) => {
                         return (
                             <TaskCard
