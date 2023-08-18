@@ -58,7 +58,9 @@ const FormTask = ({
 
     const handleChange = (e) => {
         e.preventDefault();
-        setError(true);
+
+        setError(false);
+        
         setFormState({ ...formState, [e.target.name]: e.target.value });
     };
 
@@ -69,7 +71,7 @@ const FormTask = ({
             <div className="form-task-wrap-input">
                 <label>TITLE :</label>
                 <input
-                    className={error ? "input-error" : "form-input"}
+                    className={(title === "" && error) ? "form-input error" : "form-input"}
                     type='text'
                     name="title"
                     value={title}
@@ -80,7 +82,7 @@ const FormTask = ({
             <div className="form-task-wrap-input">
                 <label>DESCRIPTION :</label>
                 <textarea
-                    className={error ? "input-error" : "form-input"}
+                    className={(description === "" && error) ? "form-input error" : "form-input"}
                     name="description"
                     value={description}
                     placeholder={error ? 'Please enter the field!' : ""}
@@ -90,7 +92,7 @@ const FormTask = ({
             <div className="form-task-wrap-input">
                 <label>DEADLINE :</label>
                 <input
-                    className={error ? "input-error" : "form-input"}
+                    className={(deadline === "" && error) ? "form-input error" : "form-input"}
                     type='date'
                     name='deadline'
                     min={moment().format("YYYY-MM-DD")}
