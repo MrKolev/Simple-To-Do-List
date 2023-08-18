@@ -18,7 +18,7 @@
   position: absolute;
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
-   top: 10%;
+  top: 10%;
   flex-direction: column;
   align-items: center;
   overflow-y: auto;
@@ -56,8 +56,9 @@
   align-items: center;
 }
 
+
 .error {
-  border: 2px solid #f90000;
+  border-color: #f90000 !important;
 }
 
 .form-wrapper h3 {
@@ -66,23 +67,17 @@
 }
 
 .input-name-wrapper {
-  display: flex;
-  flex-direction: column;
-  width: 80%;
-  border-radius: 12px;
-  border: 1px solid #ccc;
-  margin: 0 auto;
-  background-color: #D5E7F4;
-  align-items: center;
   margin-bottom: 10px;
 }
 
-.neme-input {
-  border: 1px solid white;
+.name-input {
+  border: 1px solid;
+  border-color: white;
+
   border-radius: 4px;
   margin-bottom: 10px;
 }
 
-.neme-input:focus {
+.name-input:focus {
   outline: none;
 }

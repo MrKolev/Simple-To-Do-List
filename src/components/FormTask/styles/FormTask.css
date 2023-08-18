@@ -10,19 +10,12 @@
   align-items: center;
 }
 
-.input-error {
-  border: 2px solid red;
-  border-radius: 4px;
-}
-
-
 .form-input {
   border: 1px solid white;
   border-radius: 4px;
 }
 
-.form-input,
-.input-error:focus {
+.form-input:focus {
   outline: none;
 }
 
@@ -33,7 +26,3 @@
   border-radius: 4px;
 
 }
-
-/* .form-task-wrap-btn button {
-  margin-right: 10px;
-} */

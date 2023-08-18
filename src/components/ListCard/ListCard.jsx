@@ -18,14 +18,14 @@ const ListCard = ({ isEditMode, listData, addEditedList, close, addNewList }) =>
         }
     );
     const [taskForEdit, setTaskForEdit] = useState({});
-    const [errorName, setErrorNeme] = useState(false);
+    const [errorName, setErrorName] = useState(false);
     const [errorTasks, setErrorTasks] = useState(false);
     const [isEditTaskMode, setIsEditTaskMode] = useState(false);
 
     // seva new/edit list card
     const onSubmit = () => {
         if (name.length <= 0 || tasks.length === 0) {
-            if (name.length <= 0) setErrorNeme(true);
+            if (name.length <= 0) setErrorName(true);
             if (tasks.length === 0) setErrorTasks(true);
             return
         };
@@ -66,7 +66,7 @@ const ListCard = ({ isEditMode, listData, addEditedList, close, addNewList }) =>
             const newTasks = [newTask, ...prevList.tasks];
             return { ...prevList, tasks: newTasks };
         });
-        setErrorNeme(false);
+       
         setErrorTasks(false);
     };
 
@@ -84,11 +84,7 @@ const ListCard = ({ isEditMode, listData, addEditedList, close, addNewList }) =>
     const addNameOfList = (e) => {
         e.preventDefault();
 
-        if (e.target.value === "") {
-            e.target.className = "input-error";
-        } else {
-            e.target.className = "neme-input";
-        };
+        setErrorName(false);
 
         setList((prevList) => {
             return { ...prevList, name: e.target.value };
@@ -104,11 +100,11 @@ const ListCard = ({ isEditMode, listData, addEditedList, close, addNewList }) =>
 
                 <h2>{listData ? "Edit List" : "New List"}</h2>
 
-                <div className="input-name-wrapper" >
+                <div className="form-wrapper input-name-wrapper" >
                     <label>Name:</label>
                     <input
                         type='text'
-                        className={errorName ? "neme-input error" : "neme-input"}
+                        className={errorName ? "name-input error" : "name-input"}
                         value={name}
                         onChange={addNameOfList}
                         placeholder={errorName ? "please fill in the field" : ""}
@@ -116,23 +112,23 @@ const ListCard = ({ isEditMode, listData, addEditedList, close, addNewList }) =>
                 </div>
 
                 <div className={errorTasks ? "form-wrapper error" : "form-wrapper"}>
-                {!isEditTaskMode && <>
-                    <h3>Create new task</h3>
-                    <FormTask
-                        addNewTask={addNewTask}
-                        isEditList={false}
-                    />
-                </>}
+                    {!isEditTaskMode && <>
+                        <h3>Create new task</h3>
+                        <FormTask
+                            addNewTask={addNewTask}
+                            isEditList={false}
+                        />
+                    </>}
 
-                {isEditTaskMode && <>
-                    <h3>Edit task</h3>
-                    <FormTask
-                        setEditTask={setEditTask}
-                        task={taskForEdit}
-                        isEditTaskMode={isEditTaskMode}
-                        close={() => setIsEditTaskMode(false)}
-                    />
-                </>}
+                    {isEditTaskMode && <>
+                        <h3>Edit task</h3>
+                        <FormTask
+                            setEditTask={setEditTask}
+                            task={taskForEdit}
+                            isEditTaskMode={isEditTaskMode}
+                            close={() => setIsEditTaskMode(false)}
+                        />
+                    </>}
                 </div>
                 <ul className="list-tasks-wrap">
                     {tasks.map((task) => {
