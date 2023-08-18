@@ -1,6 +1,6 @@
+import "./styles/ListCard.css"
 import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import "./styles/ListCard.css"
 import { FormTask } from '../FormTask';
 import { TaskCard } from '../TaskCard';
 import { getTaskById } from '../../utils/utils';
@@ -18,17 +18,14 @@ const ListCard = ({ isEditMode, listData, addEditedList, close, addNewList }) =>
     const [taskForEdit, setTaskForEdit] = useState({});
     const [errorName, setErrorNeme] = useState(false);
     const [errorTasks, setErrorTasks] = useState(false);
-    const [isEditTaskMode, setIsEditTaskMode] = useState(false)
+    const [isEditTaskMode, setIsEditTaskMode] = useState(false);
 
     // seva new/edit list card
     const onSubmit = () => {
-
         if (name.length <= 0 || tasks.length === 0) {
-            if(name.length <= 0)setErrorNeme(true);
-            if(tasks.length === 0) setErrorTasks(true)
-  
-            window.scrollTo(0, 0);
-            return 
+            if (name.length <= 0) setErrorNeme(true);
+            if (tasks.length === 0) setErrorTasks(true);
+            return
         };
 
         const newList = {
@@ -42,24 +39,25 @@ const ListCard = ({ isEditMode, listData, addEditedList, close, addNewList }) =>
             addEditedList(newList);
         } else {
             addNewList(newList);
-        }
-
+        };
         close();
     }
+
     // delite task by id
     const deleteTaskById = (taskId) => {
         setList((prevList) => {
             const newTasks = prevList.tasks.filter((task) => taskId !== task.id);
             return { ...prevList, tasks: newTasks };
         });
-    }
+    };
 
     // open task from edit by id 
     const openEtitTaskCard = (taskId) => {
         setTaskForEdit(getTaskById(taskId, tasks));
-        setIsEditTaskMode(true)
+        setIsEditTaskMode(true);
 
-    }
+    };
+
     // add new task to list
     const addNewTask = (newTask) => {
         setList((prevList) => {
@@ -68,7 +66,7 @@ const ListCard = ({ isEditMode, listData, addEditedList, close, addNewList }) =>
         });
         setErrorNeme(false);
         setErrorTasks(false);
-    }
+    };
 
     // save edit task to list by id
     const setEditTask = (editTask) => {
@@ -78,19 +76,17 @@ const ListCard = ({ isEditMode, listData, addEditedList, close, addNewList }) =>
         });
         setIsEditTaskMode(false);
         setErrorTasks(false);
-        
-
-    }
+    };
 
     // add name of list
     const addNameOfList = (e) => {
         e.preventDefault();
 
-        if(e.target.value === ""){
-            e.target.className = "input-error"
-        }else{
-            e.target.className = "neme-input"
-        }
+        if (e.target.value === "") {
+            e.target.className = "input-error";
+        } else {
+            e.target.className = "neme-input";
+        };
 
         setList((prevList) => {
             return { ...prevList, name: e.target.value };
@@ -155,8 +151,6 @@ const ListCard = ({ isEditMode, listData, addEditedList, close, addNewList }) =>
         </div>
     );
 }
-
-ListCard.defaultProps = { action: "create" };
 
 export default ListCard;
 

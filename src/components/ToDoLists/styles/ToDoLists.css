@@ -1,24 +1,79 @@
 .list-wrapper {
-  max-width: 40rem;
-  margin: 2rem auto;
-  background-color: white;
-  padding: 1rem;
+  display: flex;
+  width: 80%;
+  background-color: #D5E7F4;
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  flex-direction: column;
+  align-items: center;
+  margin: 10px auto;
 }
 
-.task {
-  background-color: rgb(121, 121, 196);
-  border-bottom: 5px solid #ece994;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+.list-name-wrap{
   width: 80%;
-  display: inline-block;
-  margin: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f5f5f5;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin: 9px auto;
 }
+
+.list-name {
+  font-size: 18px;
+  font-weight: bold;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #94d0fa69;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.list-status-text {
+  font-size: 18px;
+  font-weight: bold;
+  color: #555;
+}
+
+.list-status{
+  background-color: #2196F3;
+  color: #fff;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.list-status-comp{
+  background-color: #4CAF50;
+}
+
+.list-tasks-wrap{
+  width: 90%;
+  display: flex;
+  align-items: stretch;
+  background-color: #f5f5f5;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin: 9px auto;
+  flex-direction: column;
+}
+
+.list-tasks-button-wrap{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
 
 .delete-btn:hover {
-  color: red;  
+  color: #E53935  
 }
 
 .edit-btn:hover {

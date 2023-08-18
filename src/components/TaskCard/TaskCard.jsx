@@ -1,8 +1,6 @@
-import { BsFillTrashFill, BsFillPencilFill, BsCheckCircle, BsXCircle, BsClock } from "react-icons/bs";
 import "./styles/TaskCard.css"
+import { BsFillTrashFill, BsFillPencilFill, BsCheckCircle, BsXCircle, BsClock } from "react-icons/bs";
 import StatusTooltip from "./Status";
-
-
 
 const TaskCard = ({
     task,

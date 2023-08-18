@@ -1,4 +1,3 @@
-
 const StatusTooltip = ({ id, updateTaskStatus, taskStatus }) => {
 
   const handleStatusChange = (event) => {

@@ -1,14 +1,13 @@
 import moment from "moment";
 
-
 export const updateTaskStatusById = (toDoLists, id, taskStatus) => {
 
   const updatedLists = toDoLists.map(toDoList => {
-
     const updatedTasks = toDoList.tasks.map(task => {
       if (task.id === id) {
         return { ...task, taskStatus: taskStatus };
-      }
+      };
+
       return task;
     });
 
@@ -16,7 +15,7 @@ export const updateTaskStatusById = (toDoLists, id, taskStatus) => {
   });
 
   return updatedLists;
-}
+};
 
 export const checkTaskExpired = (lists) => {
 
@@ -30,37 +29,35 @@ export const checkTaskExpired = (lists) => {
         if (expirationDate.isBefore(today)) {
           task.taskStatus = "DISABLED";
           isUpdated = true;
-        }
-      }
-    })
-  })
+        };
+      };
+    });
+  });
 
   if (isUpdated) {
-    return lists
+    return lists;
   } else {
     return false;
-  }
-
+  };
 };
 
 export const getTaskById = (taskId, tasks) => {
   return tasks.filter((task) => taskId === task.id)[0];
-}
+};
 
 export const checkListStatus = (toDoList) => {
   toDoList.forEach((list) => {
-    const tasks = list.tasks;
-    const allTasksCompleted = tasks.every((task) => task.taskStatus === "COMPLETED" || task.taskStatus === "DISABLED");
+    const allTasksCompleted = list.tasks.every((task) => task.taskStatus === "COMPLETED" || task.taskStatus === "DISABLED");
 
     if (allTasksCompleted) {
       list.listStatus = "COMPLETED";
-    }else{
+    } else {
       list.listStatus = "WAITING";
     }
   });
 
   return toDoList;
-}
+};
 
 
 

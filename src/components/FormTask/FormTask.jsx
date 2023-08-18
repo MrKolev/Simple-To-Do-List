@@ -3,7 +3,6 @@ import { v4 as uuidv4 } from 'uuid';
 import "./styles/FormTask.css"
 import moment from 'moment/moment';
 
-
 const FormTask = ({
     task,
     addNewTask,
@@ -43,20 +42,20 @@ const FormTask = ({
             deadline: deadline,
             id: id || uuidv4(),
             taskStatus: taskStatus || "WAITING"
-        }
+        };
 
         if (isEditTaskMode) {
-            setEditTask(newTask)
+            setEditTask(newTask);
         } else {
             addNewTask(newTask);
-        }
+        };
 
         setFormState({
             title: "",
             description: "",
             deadline: "",
             status: false,
-        })
+        });
 
         setErrorTitle(false);
         setErrorDescription(false);
@@ -68,9 +67,9 @@ const FormTask = ({
         e.preventDefault();
 
         if (e.target.value === "") {
-            e.target.className = "input-error"
+            e.target.className = "input-error";
         } else {
-            e.target.className = "form-input"
+            e.target.className = "form-input";
         }
         setFormState({ ...formState, [e.target.name]: e.target.value });
     };

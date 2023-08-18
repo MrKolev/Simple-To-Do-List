@@ -21,13 +21,11 @@
   left: 30%;
   top: 10%;
 
-  scrollbar-width: none;
-  -ms-overflow-style: none;
+  /* scrollbar-width: none;
+  -ms-overflow-style: none; */
 }
 
-.modal-content::-webkit-scrollbar {
-  display: none;
-}
+
 
 .close {
   position: absolute;

@@ -1,30 +1,8 @@
-import classes from "./App.module.css";
+import "./App.css";
 import { useEffect, useState } from 'react';
 import { ToDoLists } from "./components/ToDoLists";
 import { ListCard } from './components/ListCard';
 import { checkListStatus, checkTaskExpired, updateTaskStatusById } from "./utils/utils";
-
-
-// const toDoLists = [{
-//   id: 'toDo1',
-//   name: 'toDo1',
-//   listStatus: "COMPLETED",
-//   tasks: [{
-//     title: "task1",
-//     description: "To do task1",
-//     deadline: "20.01.2024",
-//     id: "id1",
-//     taskStatus: "COMPLETED",
-//   },
-//   {
-//     title: "task2",
-//     description: "To do task2",
-//     deadline: "20.01.2024",
-//     id: "id2",
-//     taskStatus: "COMPLETED",
-//   }]
-
-
 
 const App = () => {
 
@@ -42,8 +20,6 @@ const App = () => {
 
     localStorage.setItem("data", JSON.stringify(toDoList));
   }, [toDoList]);
-
-
 
   // adding the created new list to the ToDoList
   const addNewList = (newList) => {
@@ -73,7 +49,7 @@ const App = () => {
     if (isConfirmed) {
       const filteredList = toDoList.filter((list) => listId !== list.id);
       setToDoList(filteredList);
-    }
+    };
   };
 
   // opening the card to edit a list by id
@@ -81,17 +57,16 @@ const App = () => {
     const listById = toDoList.filter((list) => listId === list.id);
     setListById(listById[0]);
     setShowEditCardList(true);
-  }
-
+  };
 
   // opening the card to create a new list
   const openCreateNewList = () => {
     setShowCreateCardList(true);
-  }
+  };
 
   return (
-    <div className={classes.app}>
-      <button className={classes.button} onClick={openCreateNewList}>create</button>
+    <div className="app-content">
+      <span className="create-new-list" onClick={openCreateNewList}>CREATE</span>
 
       {showCreateCardList && <ListCard
         listData={null}
@@ -107,8 +82,8 @@ const App = () => {
         close={() => setShowEditCardList(false)}
         isEditMode={true}
       />}
-      <div>
-        {toDoList.length === 0 && <p>Еmpty list...</p>}
+      <div className="lists-content">
+        {toDoList.length === 0 && <span className="lists-content-empty" >Task list is empty...</span>}
         {toDoList.map((list) => {
           return (<ToDoLists
             status={list.listStatus}
