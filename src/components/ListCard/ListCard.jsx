@@ -113,7 +113,7 @@ const ListCard = ({ isEditMode, listData, addEditedList, close, addNewList }) =>
                     />
                 </div>
 
-                {!isEditTaskMode && <div className={errorTasks ? "error-form-wrapper" : "form-wrapper"}>
+                {!isEditTaskMode && <div className={errorTasks ? "form-wrapper error" : "form-wrapper"}>
                     <h3>Create new task</h3>
                     <FormTask
                         addNewTask={addNewTask}
@@ -121,7 +121,7 @@ const ListCard = ({ isEditMode, listData, addEditedList, close, addNewList }) =>
                     />
                 </div>}
 
-                {isEditTaskMode && <div className={errorTasks ? "error-form-wrapper-edit" : "form-wrapper-edit"}>
+                {isEditTaskMode && <div className={errorTasks ? "form-wrapper edit error" : "form-wrapper edit"}>
                     <h3>Edit task</h3>
                     <FormTask
                         setEditTask={setEditTask}

@@ -10,19 +10,18 @@
 }
 
 .modal-content {
+  display: flex;
   background-color: rgb(255, 252, 252);
   border: 1px solid #888;
-  width: 41%;
-  max-height: 80%;
+  width: 50%;
   position: absolute;
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
   overflow-y: auto;
   left: 30%;
   top: 10%;
-
-  /* scrollbar-width: none;
-  -ms-overflow-style: none; */
+  flex-direction: column;
+  align-items: center;
 }
 
 
@@ -44,25 +43,15 @@
   border: 1px solid #ccc;
   margin: 0 auto;
   background-color: bisque;
+  align-items: center;
 }
 
-.form-wrapper-edit {
-  display: flex;
-  flex-direction: column;
-  width: 80%;
-  border-radius: 12px;
-  border: 1px solid #ccc;
-  margin: 0 auto;
+.edit {
   background-color: rgb(254, 221, 180);
 }
 
-.error-form-wrapper {
-  display: flex;
-  flex-direction: column;
-  width: 80%;
-  border-radius: 12px;
+.error {
   border: 2px solid #f90000;
-  margin: 0 auto;
   background-color: bisque;
 }
 
