@@ -6,6 +6,8 @@ import { checkListStatus, checkTaskExpired, updateTaskStatusById } from "./utils
 
 const App = () => {
 
+  document.body.classList.remove();
+
   const [toDoList, setToDoList] = useState(JSON.parse(localStorage.getItem("data")));
   const [listById, setListById] = useState({});
   const [showCreateCardList, setShowCreateCardList] = useState(false);
@@ -62,7 +64,14 @@ const App = () => {
   // opening the card to create a new list
   const openCreateNewList = () => {
     setShowCreateCardList(true);
+    
   };
+
+  const closeModal = () => {
+    document.body.classList.remove('modal-open');
+    setShowEditCardList(false);
+    setShowCreateCardList(false);
+  }
 
   return (
     <div className="app-content">
@@ -71,7 +80,7 @@ const App = () => {
       {showCreateCardList && <ListCard
         listData={null}
         addEditedList={addEditedList}
-        close={() => setShowCreateCardList(false)}
+        close={closeModal}
         addNewList={addNewList}
         isEditMode={false}
       />}
@@ -79,7 +88,7 @@ const App = () => {
       {showEditCardList && <ListCard
         listData={listById}
         addEditedList={addEditedList}
-        close={() => setShowEditCardList(false)}
+        close={closeModal}
         isEditMode={true}
       />}
       <div className="lists-content">

@@ -6,6 +6,8 @@ import { TaskCard } from '../TaskCard';
 import { getTaskById } from '../../utils/utils';
 
 const ListCard = ({ isEditMode, listData, addEditedList, close, addNewList }) => {
+   
+    document.body.classList.add('modal-open');
 
     const [{ id, name, listStatus, tasks }, setList] = useState(
         listData || {

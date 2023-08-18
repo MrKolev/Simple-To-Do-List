@@ -1,27 +1,37 @@
 .modal {
-  display: block;
+  display: flex;
   position: fixed;
   z-index: 1;
-  left: 0;
-  top: 0;
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.4);
+  align-items: center;
+  flex-direction: column;
 }
 
 .modal-content {
   display: flex;
+  max-height: 80%;
   background-color: rgb(255, 252, 252);
   border: 1px solid #888;
-  width: 50%;
+  width: 40%;
   position: absolute;
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
-  overflow-y: auto;
-  left: 30%;
-  top: 10%;
+   top: 10%;
   flex-direction: column;
   align-items: center;
+  overflow-y: auto;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #3498DB;
+  border-radius: 4px;
+  transition: background-color 0.3s;
 }
 
 
