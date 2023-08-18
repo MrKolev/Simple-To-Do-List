@@ -108,22 +108,23 @@ const ListCard = ({ isEditMode, listData, addEditedList, close, addNewList }) =>
                     <label>Name:</label>
                     <input
                         type='text'
-                        className={errorName ? "input-error" : "neme-input"}
+                        className={errorName ? "neme-input error" : "neme-input"}
                         value={name}
                         onChange={addNameOfList}
                         placeholder={errorName ? "please fill in the field" : ""}
                     />
                 </div>
 
-                {!isEditTaskMode && <div className={errorTasks ? "form-wrapper error" : "form-wrapper"}>
+                <div className={errorTasks ? "form-wrapper error" : "form-wrapper"}>
+                {!isEditTaskMode && <>
                     <h3>Create new task</h3>
                     <FormTask
                         addNewTask={addNewTask}
                         isEditList={false}
                     />
-                </div>}
+                </>}
 
-                {isEditTaskMode && <div className={errorTasks ? "form-wrapper edit error" : "form-wrapper edit"}>
+                {isEditTaskMode && <>
                     <h3>Edit task</h3>
                     <FormTask
                         setEditTask={setEditTask}
@@ -131,7 +132,8 @@ const ListCard = ({ isEditMode, listData, addEditedList, close, addNewList }) =>
                         isEditTaskMode={isEditTaskMode}
                         close={() => setIsEditTaskMode(false)}
                     />
-                </div>}
+                </>}
+                </div>
                 <ul className="list-tasks-wrap">
                     {tasks.map((task) => {
                         return (
