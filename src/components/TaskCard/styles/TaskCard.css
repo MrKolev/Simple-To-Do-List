@@ -72,8 +72,7 @@ tbody td:hover {
 .tooltip .tooltiptext {
   visibility: hidden;
   position: absolute;
-  /* background-color: #08adce; */
-  background-color: rgba(8, 173, 206, 0.8);
+    background-color: rgba(8, 173, 206, 0.8);
   color: #fff;
   padding: 5px;
   border-radius: 3px;
