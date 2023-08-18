@@ -8,7 +8,7 @@ const App = () => {
 
   document.body.classList.remove();
 
-  const [toDoList, setToDoList] = useState(JSON.parse(localStorage.getItem("data")));
+  const [toDoList, setToDoList] = useState([]);
   const [listById, setListById] = useState({});
   const [showCreateCardList, setShowCreateCardList] = useState(false);
   const [showEditCardList, setShowEditCardList] = useState(false);
