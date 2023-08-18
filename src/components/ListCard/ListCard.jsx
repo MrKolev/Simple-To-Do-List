@@ -131,6 +131,7 @@ const ListCard = ({ isEditMode, listData, addEditedList, close, addNewList }) =>
                     </>}
                 </div>
                 <ul className="list-tasks-wrap">
+                    {errorTasks && <p>Empty list of tasks cannot by created...</p>}
                     {tasks.map((task) => {
                         return (
                             <TaskCard
@@ -144,7 +145,7 @@ const ListCard = ({ isEditMode, listData, addEditedList, close, addNewList }) =>
                     })}
                 </ul>
                 <div>
-                    <button className={errorName ? "save-btn error-button" : "save-btn"} onClick={onSubmit}>Save</button>
+                    <button className={errorName || errorTasks ? "save-btn error-button" : "save-btn"} onClick={onSubmit}>Save</button>
                     <button className="close-btn" onClick={close}>Close</button>
                 </div>
             </div>
