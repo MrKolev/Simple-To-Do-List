@@ -63,6 +63,7 @@ button:hover {
   transform: translateY(-3px);
 }
 
-/* input.input-error {
-  border: 2px solid red
-} */
+.error-button,
+.error-button:hover{
+  background-color: #9db4b9;
+}

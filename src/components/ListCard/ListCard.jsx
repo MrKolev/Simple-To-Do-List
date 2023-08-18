@@ -144,7 +144,7 @@ const ListCard = ({ isEditMode, listData, addEditedList, close, addNewList }) =>
                     })}
                 </ul>
                 <div>
-                    <button className="save-btn" onClick={onSubmit}>Save</button>
+                    <button className={errorName ? "save-btn error-button" : "save-btn"} onClick={onSubmit}>Save</button>
                     <button className="close-btn" onClick={close}>Close</button>
                 </div>
             </div>
