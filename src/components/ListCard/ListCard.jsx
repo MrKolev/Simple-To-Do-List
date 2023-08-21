@@ -1,12 +1,12 @@
 import "./styles/ListCard.css"
 import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { FormTask } from '../FormTask';
-import { TaskCard } from '../TaskCard';
+import { FormTask } from './FormTask';
 import { getTaskById } from '../../utils/utils';
+import { TaskCard } from "../TaskCard";
 
 const ListCard = ({ isEditMode, listData, addEditedList, close, addNewList }) => {
-   
+
     document.body.classList.add('modal-open');
 
     const [{ id, name, listStatus, tasks }, setList] = useState(
@@ -154,5 +154,3 @@ const ListCard = ({ isEditMode, listData, addEditedList, close, addNewList }) =>
 }
 
 export default ListCard;
-
-

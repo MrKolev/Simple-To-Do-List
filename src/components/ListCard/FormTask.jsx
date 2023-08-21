@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import "./styles/FormTask.css"
+import "./styles/ListCard.css";
 import moment from 'moment/moment';
 
-const FormTask = ({
+export const FormTask = ({
     task,
     addNewTask,
     setEditTask,
@@ -109,4 +109,3 @@ const FormTask = ({
     );
 };
 
-export default FormTask
