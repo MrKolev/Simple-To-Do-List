@@ -37,13 +37,23 @@
 
 
 .close {
-  position: fixed;
+  position: fixed;  
   top: 12%;
   right: 32%;
-  font-size: 24px;
+  font-size: 25px;
   font-weight: bold;
   cursor: pointer;
-}
+  padding: 10px;
+  transform: rotate(45deg);
+  transition: all 0.2s ease-in-out;
+ }
+
+ .close:hover {
+  transform: rotate(-45deg);
+  font-size: 30px;
+  color: #310000;
+  right: 32%;
+ }
 
 .form-wrapper {
   display: flex;
